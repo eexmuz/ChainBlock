@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221375f0dee5502418ca2684e53ba19b, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  loader: {fileID: 1990758559144944, guid: 9d60ad2488bf7e9409dfeb6a47764227, type: 3}
+  ObjectsDatabase: {fileID: 11400000, guid: 9401ad1adf281c040b31abd115bfea9b, type: 2}
+  Levels:
+  - {fileID: 11400000, guid: d678fc45f014bb048b9ed0474221743c, type: 2}
+  - {fileID: 11400000, guid: 993e67c3c381fa44abf06750860d334f, type: 2}
+  - {fileID: 11400000, guid: be68aad93dc71e3468b4239580bec9a0, type: 2}
+  - {fileID: 11400000, guid: 7d5cbc9a583e6c84c8801b9f90d96e21, type: 2}
+  - {fileID: 11400000, guid: d5b2f5870dc56c241885cd5efe410c3f, type: 2}
+  - {fileID: 11400000, guid: 8737cf8287c951742b4b86e304e2c06f, type: 2}
+  - {fileID: 11400000, guid: d80d236ca16743a46934660e55059332, type: 2}
+  - {fileID: 11400000, guid: 918a3ba28d71aaa41828d81e34595380, type: 2}
+  - {fileID: 11400000, guid: 0fbd5a1e5f8781b46a29ea48cefe37e1, type: 2}
+  - {fileID: 11400000, guid: cb7ba14926213014690cdfb65c309d17, type: 2}
+  - {fileID: 11400000, guid: 17e57a48de71c9b4aaab783ebb1dade3, type: 2}
+  - {fileID: 11400000, guid: 8a61720e06ca20a4bab8fb42c585c791, type: 2}
+  - {fileID: 11400000, guid: 7a6ceb56fabe0794f923b26e429087c3, type: 2}
+  - {fileID: 11400000, guid: 6f977deac9e7d4646a1175953a19da1b, type: 2}
+  - {fileID: 11400000, guid: d7243c0c5b9324e438266313054a8e20, type: 2}
+  AnimationSettings: {fileID: 11400000, guid: 9e728e51302cab648894301401624d4c, type: 2}
+  levelWidth: 10
+  platformsGap: 4
+  SqueezeScale: {x: 1.4, y: 0.7, z: 1}
+  SqueezeTime: 0.1
+  UnsqueezeTime: 0.05
+  SqueezeEase: 4
+  UnsqueezeEase: 4
+  BlockMovementWhileAnimation: 0
