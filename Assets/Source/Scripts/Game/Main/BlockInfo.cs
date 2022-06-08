@@ -1,9 +1,9 @@
 using UnityEngine;
 
 [System.Serializable]
-public class CubeInfo
+public class BlockInfo
 {
-    public int Number;
+    public int PowerOfTwo;
     public bool Movable;
     public bool Mergeable;
 }

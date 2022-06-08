@@ -6,5 +6,5 @@ using Utility;
 public class LevelData : ScriptableObject
 {
     public Coords Dimensions;
-    public List<BoardCellData> BoardData;
+    public List<BoardCellData> CellsData;
 }

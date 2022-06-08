@@ -19,6 +19,11 @@ namespace Core.Settings
         /// </summary>
         public GameObject loader;
 
+        public List<LevelData> Levels;
+        
+        public Block BlockPrefab;
+        public Vector2 CellSize;
+
         #endregion
     }
 }

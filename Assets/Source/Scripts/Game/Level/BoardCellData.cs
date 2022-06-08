@@ -4,5 +4,5 @@ using UnityEngine;
 public class BoardCellData
 {
     public Coords Coords;
-    public CubeInfo CubeInfo;
+    public BlockInfo BlockInfo;
 }
