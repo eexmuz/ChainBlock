@@ -21,6 +21,8 @@ public class Block : DIBehaviour
     public bool Movable { get; private set; }
     public bool Mergeable { get; private set; }
     
+    public Coords Coords { get; set; }
+    
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {
         PowerOfTwo = powerOfTwo;
