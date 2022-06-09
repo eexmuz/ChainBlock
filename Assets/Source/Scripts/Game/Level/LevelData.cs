@@ -11,4 +11,6 @@ public class LevelData : ScriptableObject
     public int3 StarMoves;
     public Coords Dimensions;
     public List<BoardCellData> CellsData;
+
+    public int LevelIndex { get; set; }
 }

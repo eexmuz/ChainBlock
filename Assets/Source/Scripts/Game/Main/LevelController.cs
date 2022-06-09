@@ -23,9 +23,10 @@ public class LevelController : DIBehaviour
     [Inject]
     private IPlayerDataService _playerDataService;
 
+    [Inject]
+    private IGameService _gameService;
+
     private int _movesCounter;
-    private int _currentLevelIndex;
-    
 
     public ObjectPool<Block> BlocksPool { get; private set; }
 
@@ -45,7 +46,7 @@ public class LevelController : DIBehaviour
     private void OnBlocksMerge(NotificationType notificationType, NotificationParams notificationParams)
     {
         int mergedPOT = (int) notificationParams.Data;
-        if (mergedPOT >= _gameSettings.Levels[_currentLevelIndex].TargetValue.POT)
+        if (mergedPOT >= _gameService.CurrentLevel.TargetValue.POT)
         {
             Dispatch(NotificationType.PlayerReachedTargetNumber);
             Debug.Log("YOU WON");
@@ -56,17 +57,19 @@ public class LevelController : DIBehaviour
     {
         int levelIndex = (int) notificationParams.Data;
         LevelData level = _gameSettings.Levels[levelIndex];
+        level.LevelIndex = levelIndex;
+        
         _board.SetupBoard(level);
 
-        _currentLevelIndex = levelIndex;
         _movesCounter = 0;
         
-        Dispatch(NotificationType.LevelLoaded, NotificationParams.Get(levelIndex));
+        Dispatch(NotificationType.LevelLoaded, NotificationParams.Get(level));
     }
 
     private void GenerateRandomLevel()
     {
-        int targetPOT = 9;
+        LevelData levelData = LevelGenerator.GenerateLevel();
+        _board.SetupBoard(levelData);
     }
 
     private void OnSwipe(Direction direction)

@@ -29,10 +29,11 @@ public class GameScreen : DIBehaviour
     [Inject]
     private GameSettings _gameSettings;
 
+    [Inject]
+    private IGameService _gameService;
+
     [Inject] 
     private ISoundService _soundService;
-
-    private int _currentLevelIndex;
 
     protected override void OnAppInitialized()
     {
@@ -53,15 +54,14 @@ public class GameScreen : DIBehaviour
         _moves.text = "MOVES: " + moves;
         for (int i = 0; i < _stars.Length; i++)
         {
-            _stars[i].SetActive(moves < _gameSettings.Levels[_currentLevelIndex].StarMoves[i]);
+            _stars[i].SetActive(moves < _gameService.CurrentLevel.StarMoves[i]);
         }
     }
 
     private void OnLevelLoaded(NotificationType notificationType, NotificationParams notificationParams)
     {
-        _currentLevelIndex = (int) notificationParams.Data;
-        LevelData loadedLevel = _gameSettings.Levels[_currentLevelIndex];
-        _levelNumber.text = "LEVEL " + (_currentLevelIndex + 1);
+        LevelData loadedLevel = (LevelData) notificationParams.Data;
+        _levelNumber.text = "LEVEL " + (loadedLevel.LevelIndex + 1);
         _targetBlockNumber.text = loadedLevel.TargetValue.Number.ToString();
         _targetBlockImage.color = _gameSettings.BlockColors.GetColor(loadedLevel.TargetValue);
         foreach (var star in _stars)

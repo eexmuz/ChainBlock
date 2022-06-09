@@ -14,6 +14,7 @@ namespace Core.Subsystems
         private IPlayerDataService _playerDataService;
         private ISocialService _socialService;
         private ITimeService _timeService;
+        private IGameService _gameService;
 
         #endregion
 
@@ -29,6 +30,7 @@ namespace Core.Subsystems
             _playerDataService = gameObject.AddComponent<PlayerDataService>();
             _socialService = gameObject.AddComponent<SocialService>();
             _timeService = gameObject.AddComponent<TimeService>();
+            _gameService = gameObject.AddComponent<GameService>();
 
             Services = new List<IService>
             {
@@ -36,6 +38,7 @@ namespace Core.Subsystems
                 _playerDataService,
                 _socialService,
                 _timeService,
+                _gameService,
             };
         }
 

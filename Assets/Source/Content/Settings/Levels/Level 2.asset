@@ -20,9 +20,9 @@ MonoBehaviour:
     POT: 8
     Number: 256
   StarMoves:
-    x: 15
-    y: 13
-    z: 11
+    x: 14
+    y: 12
+    z: 10
   Dimensions:
     x: 5
     y: 5
