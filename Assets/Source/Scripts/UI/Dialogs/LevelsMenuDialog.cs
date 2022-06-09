@@ -34,7 +34,14 @@ public class LevelsMenuDialog : BaseViewController
     {
         base.InitWithData(data);
 
-        OpenPage(_playerDataService.LastLevel / _maxPageItems);
+        var levels = _playerDataService.LevelStatusList;
+        for (int i = 0; i < levels.Count; i++)
+        {
+            LevelsMenuItem item = Instantiate(_menuItemPrefab, _menuItemsParent);
+            item.Init(i, i >= levels.Count ? null : levels[i]);
+        }
+        
+        //OpenPage(_playerDataService.LastLevel / _maxPageItems);
         
         Subscribe(NotificationType.OpenLevelFromMenu, OnOpenLevelFromMenu);
     }
@@ -65,6 +72,7 @@ public class LevelsMenuDialog : BaseViewController
         _currentPage = pageIndex;
         
         var levels = _playerDataService.LevelStatusList;
+
         if (_items != null)
         {
             int i = _currentPage * _maxPageItems;
@@ -91,18 +99,16 @@ public class LevelsMenuDialog : BaseViewController
     private void OnOpenLevelFromMenu(NotificationType notificationType, NotificationParams notificationParams)
     {
         _soundService.PlaySound(Sounds.Click);
-        int level = (int) notificationParams.Data;
-        Dispatch(NotificationType.LoadLevel, NotificationParams.Get(level));
         CloseDialog();
     }
 
     public void OnSwipeUp(LeanFinger finger)
     {
-        NextPage();
+        //NextPage();
     }
     
     public void OnSwipeDown(LeanFinger finger)
     {
-        PrevPage();
+        //PrevPage();
     }
 }

@@ -59,5 +59,6 @@
         OnRevive,
         CompleteSoftTutor,
         LevelFailed,
+        GenerateRandomLevel
     }
 }

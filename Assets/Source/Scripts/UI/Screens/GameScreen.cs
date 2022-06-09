@@ -1,19 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using Aig.Client.Integration.Runtime.Subsystem;
 using Core;
 using Core.Attributes;
 using Core.Notifications;
 using Core.Services;
-using DG.Tweening;
+using Core.Settings;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.UI;
-using Utility;
 
 public class GameScreen : DIBehaviour
 {
+    [SerializeField]
+    private TMP_Text _targetBlockNumber;
+
+    [SerializeField]
+    private Image _targetBlockImage;
+
+    [SerializeField]
+    private TMP_Text _levelNumber;
+
+    [SerializeField]
+    private TMP_Text _moves;
+
+    [SerializeField]
+    private GameObject[] _stars;
+
+    [Inject]
+    private GameSettings _gameSettings;
+    
     [Inject]
     private IPlayerDataService _playerDataService;
 
@@ -36,6 +51,16 @@ public class GameScreen : DIBehaviour
     private void OnLevelLoaded(NotificationType notificationType, NotificationParams notificationParams)
     {
         int level = notificationParams == null ? _playerDataService.LastLevel : (int) notificationParams.Data;
+        LevelData loadedLevel = _gameSettings.Levels[level];
+        _levelNumber.text = "LEVEL " + (level + 1);
+        _targetBlockNumber.text = loadedLevel.TargetValue.Number.ToString();
+        _targetBlockImage.color = _gameSettings.BlockColors.GetColor(loadedLevel.TargetValue);
+        foreach (var star in _stars)
+        {
+            star.SetActive(true);
+        }
+
+        _moves.text = "MOVES: 0";
     }
 
     public void OnPauseButtonClick()
@@ -46,5 +71,10 @@ public class GameScreen : DIBehaviour
     public void OnLevelsMenuButtonClick()
     {
         Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.LevelsMenu));
+    }
+
+    public void OnGenerateRandomLevel()
+    {
+        Dispatch(NotificationType.GenerateRandomLevel);
     }
 }

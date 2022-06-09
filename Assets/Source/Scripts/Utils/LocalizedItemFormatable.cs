@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Text;
 using Core;
 using Core.Attributes;
 using TMPro;
@@ -9,6 +10,8 @@ public class LocalizedItemFormatable : DIBehaviour
 
     [Inject] 
     private ILocaleService _localeService;
+
+    private TextMeshProUGUI _label;
     
     private string GetLocalizedString()
     {
@@ -34,8 +37,23 @@ public class LocalizedItemFormatable : DIBehaviour
 
     private void FormatLocalizedTextInternal(string prefix, string postfix)
     {
-        var label = GetComponent<TextMeshProUGUI>();
-        label.text = $"{prefix}{GetLocalizedString()}{postfix}";
+        _label ??= GetComponent<TextMeshProUGUI>();
+        
+        StringBuilder builder = new StringBuilder();
+        
+        if (string.IsNullOrEmpty(prefix) == false)
+        {
+            builder.Append(prefix);
+        }
+
+        builder.Append(GetLocalizedString());
+        
+        if (string.IsNullOrEmpty(postfix) == false)
+        {
+            builder.Append(postfix);
+        }
+        
+        _label.text = builder.ToString();
     }
 
     private IEnumerator FormatLocalizedText_co(string prefix, string postfix)

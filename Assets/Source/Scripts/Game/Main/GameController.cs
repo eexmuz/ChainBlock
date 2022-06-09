@@ -2,6 +2,7 @@ using Aig.Client.Integration.Runtime.Subsystem;
 using Core;
 using Core.Attributes;
 using Core.Services;
+using UnityEngine;
 using Utility;
 
 public class GameController : DIBehaviour
@@ -37,7 +38,7 @@ public class GameController : DIBehaviour
             firstLaunch);
         
         Subscribe(NotificationType.LoadingLogoFaded, OnLoadingLogoFaded);
-        Subscribe(NotificationType.LoadLevel, OnLoadLevel);
+        Subscribe(NotificationType.OpenLevelFromMenu, OnOpenLevelFromMenu);
         Subscribe(NotificationType.LoadNextLevel, OnLoadNextLevel);
         
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsStarted += (s, s1, arg3) => BlockUIWhilePlayingAd();
@@ -49,7 +50,7 @@ public class GameController : DIBehaviour
         Dispatch(NotificationType.UiBlockingOperationEnd);
     }
     
-    private void OnLoadLevel(NotificationType notificationType, NotificationParams notificationParams)
+    private void OnOpenLevelFromMenu(NotificationType notificationType, NotificationParams notificationParams)
     {
         int level = notificationParams == null ? _playerDataService.LastLevel : (int) notificationParams.Data;
         LoadLevel(level);
@@ -63,6 +64,7 @@ public class GameController : DIBehaviour
     private void LoadLevel(int level)
     {
         Dispatch(NotificationType.OnLevelEnd);
+        Dispatch(NotificationType.LoadLevel, NotificationParams.Get(level));
     }
 
     private void BlockUIWhilePlayingAd()

@@ -28,12 +28,31 @@ public class LevelController : DIBehaviour
 
     protected override void OnAppInitialized()
     {
+        Subscribe(NotificationType.LoadLevel, OnLoadLevel);
+        Subscribe(NotificationType.GenerateRandomLevel, (a, b) => GenerateRandomLevel());
         BlocksPool = new ObjectPool<Block>(_gameSettings.BlockPrefab, 36, transform);
-        _board.SetupBoard(_gameSettings.Levels[0]);
+    }
+
+    private void OnLoadLevel(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        int levelIndex = (int) notificationParams.Data;
+        LevelData level = _gameSettings.Levels[levelIndex];
+        _board.SetupBoard(level);
+        Dispatch(NotificationType.LevelLoaded);
+    }
+
+    private void GenerateRandomLevel()
+    {
+        int targetPOT = 9;
     }
 
     private void OnSwipe(Direction direction)
     {
         _board.Swipe(direction);
+    }
+
+    public void LoadLevel(int level)
+    {
+        _board.SetupBoard(_gameSettings.Levels[level]);
     }
 }

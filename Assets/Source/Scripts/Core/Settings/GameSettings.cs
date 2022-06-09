@@ -20,7 +20,8 @@ namespace Core.Settings
         public GameObject loader;
 
         public List<LevelData> Levels;
-        
+        public BlockColorSettings BlockColors;
+
         public Block BlockPrefab;
         public Vector2 CellSize;
 

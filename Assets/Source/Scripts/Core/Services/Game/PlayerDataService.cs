@@ -173,9 +173,31 @@ namespace Core.Services
             JsonArrayWrapper wrapper = JsonUtility.FromJson<JsonArrayWrapper>(json);
             if (wrapper != null)
             {
+                _levelStatusList = wrapper.Items;
+                if (_levelStatusList.Count < _gameSettings.Levels.Count)
+                {
+                    for (int i = _levelStatusList.Count; i < _gameSettings.Levels.Count; i++)
+                    {
+                        _levelStatusList.Add(new LevelStatus
+                        {
+                            Stars = _gameSettings.Levels[i].DefaultLevelStatus.Stars,
+                            Unlocked = _gameSettings.Levels[i].DefaultLevelStatus.Unlocked,
+                        });
+                    }
+                }
             }
             else
             {
+                _levelStatusList = new List<LevelStatus>(_gameSettings.Levels.Count);
+                
+                for (int i = 0; i < _gameSettings.Levels.Count; i++)
+                {
+                    _levelStatusList.Add(new LevelStatus
+                    {
+                        Stars = _gameSettings.Levels[i].DefaultLevelStatus.Stars,
+                        Unlocked = _gameSettings.Levels[i].DefaultLevelStatus.Unlocked,
+                    });
+                }
             }
         }
 
