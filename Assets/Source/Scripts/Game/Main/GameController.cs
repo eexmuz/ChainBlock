@@ -43,6 +43,8 @@ public class GameController : DIBehaviour
         
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsStarted += (s, s1, arg3) => BlockUIWhilePlayingAd();
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsWatch += (s, s1, arg3, arg4) => UnlockUIAfterPlayingAd();
+        
+        Dispatch(NotificationType.LoadLevel, NotificationParams.Get(_playerDataService.HighestOpenedLevel));
     }
 
     private void OnLoadingLogoFaded(NotificationType notificationType, NotificationParams notificationParams)

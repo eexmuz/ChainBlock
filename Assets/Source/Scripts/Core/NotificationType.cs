@@ -44,21 +44,16 @@
         
         DisplayingDialogStateChanged,
         
-        PlayerDied,
-        PlayerFinished,
         PauseStateChanged,
         OpenLevelFromMenu,
         LoadLevel,
-        PickupRiceStar,
-        UpdateRiceStarCounter,
         LoadNextLevel,
         OnLevelEnd,
-        OnPlayerRose,
-        FallAnimation,
         LevelLoaded,
-        OnRevive,
-        CompleteSoftTutor,
         LevelFailed,
-        GenerateRandomLevel
+        GenerateRandomLevel,
+        OnPlayerMove,
+        BlocksMerge,
+        PlayerReachedTargetNumber,
     }
 }

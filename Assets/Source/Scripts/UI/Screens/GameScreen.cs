@@ -28,19 +28,18 @@ public class GameScreen : DIBehaviour
 
     [Inject]
     private GameSettings _gameSettings;
-    
-    [Inject]
-    private IPlayerDataService _playerDataService;
 
     [Inject] 
     private ISoundService _soundService;
-    
+
+    private int _currentLevelIndex;
 
     protected override void OnAppInitialized()
     {
         IntegrationSubsystem.Instance.AdsService.ShowBanner();
         
         Subscribe(NotificationType.LevelLoaded, OnLevelLoaded);
+        Subscribe(NotificationType.OnPlayerMove, OnPlayerMove);
 
         foreach (var button in GetComponentsInChildren<Button>())
         {
@@ -48,11 +47,21 @@ public class GameScreen : DIBehaviour
         }
     }
 
+    private void OnPlayerMove(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        int moves = (int) notificationParams.Data;
+        _moves.text = "MOVES: " + moves;
+        for (int i = 0; i < _stars.Length; i++)
+        {
+            _stars[i].SetActive(moves < _gameSettings.Levels[_currentLevelIndex].StarMoves[i]);
+        }
+    }
+
     private void OnLevelLoaded(NotificationType notificationType, NotificationParams notificationParams)
     {
-        int level = notificationParams == null ? _playerDataService.LastLevel : (int) notificationParams.Data;
-        LevelData loadedLevel = _gameSettings.Levels[level];
-        _levelNumber.text = "LEVEL " + (level + 1);
+        _currentLevelIndex = (int) notificationParams.Data;
+        LevelData loadedLevel = _gameSettings.Levels[_currentLevelIndex];
+        _levelNumber.text = "LEVEL " + (_currentLevelIndex + 1);
         _targetBlockNumber.text = loadedLevel.TargetValue.Number.ToString();
         _targetBlockImage.color = _gameSettings.BlockColors.GetColor(loadedLevel.TargetValue);
         foreach (var star in _stars)

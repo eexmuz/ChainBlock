@@ -97,6 +97,23 @@ namespace Core.Services
             set => _playerPrefsService.SetInt(PlayerPrefsKeys.LAST_LEVEL, value);
         }
 
+        public int HighestOpenedLevel
+        {
+            get
+            {
+                int highestOpenedLevel = 0;
+                for (int i = 0; i < LevelStatusList.Count; i++)
+                {
+                    if (LevelStatusList[i].Unlocked)
+                    {
+                        highestOpenedLevel = i;
+                    }
+                }
+
+                return highestOpenedLevel;
+            }
+        }
+
         public List<LevelStatus> LevelStatusList => _levelStatusList;
 
         #endregion

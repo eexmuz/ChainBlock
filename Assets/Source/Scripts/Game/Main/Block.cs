@@ -1,5 +1,7 @@
 using System;
 using Core;
+using Core.Attributes;
+using Core.Settings;
 using TMPro;
 using UnityEngine;
 
@@ -16,7 +18,10 @@ public class Block : DIBehaviour
 
     [SerializeField]
     private GameObject _barrier;
-    
+
+    [Inject]
+    private GameSettings _gameSettings;
+
     public int PowerOfTwo { get; private set; }
     public bool Movable { get; private set; }
     public bool Mergeable { get; private set; }
@@ -33,6 +38,12 @@ public class Block : DIBehaviour
         _valueBlock.SetActive(_barrier.activeSelf == false);
         _lock.SetActive(movable == false && mergeable == true);
         _number.gameObject.SetActive(mergeable == true);
+
+        if (_valueBlock.activeSelf)
+        {
+            _valueBlock.GetComponent<MeshRenderer>().material.color =
+                _gameSettings.BlockColors.GetColor(powerOfTwo);
+        }
 
         _number.text = (1 << powerOfTwo).ToString();
     }

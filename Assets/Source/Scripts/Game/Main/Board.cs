@@ -40,9 +40,11 @@ public class Board : DIBehaviour
             _dimensions.y * _gameSettings.CellSize.y, _boardModel.transform.localScale.z);
     }
     
-    public void Swipe(Direction direction)
+    public bool Swipe(Direction direction)
     {
         Coords coords = new Coords();
+
+        bool anyChanges = false;
         
         if (direction == Direction.Down)
         {
@@ -59,11 +61,12 @@ public class Board : DIBehaviour
                     Block blockBelow = _blocks[Coords.Index(coords.x, coords.y - 1, _dimensions.x)];
                     if (blockBelow == null)
                     {
+                        anyChanges = true;
                         SwipeBlock(block, direction);
                     }
                     else
                     {
-                        TryMergeBlocks(block, blockBelow);
+                        anyChanges = TryMergeBlocks(block, blockBelow);
                     }
                 }
             }
@@ -83,11 +86,12 @@ public class Board : DIBehaviour
                     Block blockAbove = _blocks[Coords.Index(coords.x, coords.y + 1, _dimensions.x)];
                     if (blockAbove == null)
                     {
+                        anyChanges = true;
                         SwipeBlock(block, direction);
                     }
                     else
                     {
-                        TryMergeBlocks(block, blockAbove);
+                        anyChanges = TryMergeBlocks(block, blockAbove);
                     }
                 }
             }
@@ -107,11 +111,12 @@ public class Board : DIBehaviour
                     Block blockRight = _blocks[Coords.Index(coords.x + 1, coords.y, _dimensions.x)];
                     if (blockRight == null)
                     {
+                        anyChanges = true;
                         SwipeBlock(block, direction);
                     }
                     else
                     {
-                        TryMergeBlocks(block, blockRight);
+                        anyChanges = TryMergeBlocks(block, blockRight);
                     }
                 }
             }
@@ -131,15 +136,18 @@ public class Board : DIBehaviour
                     Block blockRight = _blocks[Coords.Index(coords.x - 1, coords.y, _dimensions.x)];
                     if (blockRight == null)
                     {
+                        anyChanges = true;
                         SwipeBlock(block, direction);
                     }
                     else
                     {
-                        TryMergeBlocks(block, blockRight);
+                        anyChanges = TryMergeBlocks(block, blockRight);
                     }
                 }
             }
         }
+
+        return anyChanges;
     }
 
     private void SwipeBlock(Block block, Direction direction)
@@ -201,18 +209,20 @@ public class Board : DIBehaviour
         block.transform.position = GetCellPosition(target);
     }
     
-    private void TryMergeBlocks(Block block, Block targetBlock)
+    private bool TryMergeBlocks(Block block, Block targetBlock)
     {
         if (block.Mergeable == false || targetBlock.Mergeable == false || block.PowerOfTwo != targetBlock.PowerOfTwo)
         {
-            return;
+            return false;
         }
 
         _blocks[block.Coords.Index(_dimensions.x)] = null;
         _blocks[targetBlock.Coords.Index(_dimensions.x)] = null;
+
+        int mergedPOT = targetBlock.PowerOfTwo + 1;
         
         Block mergedBlock = _levelController.BlocksPool.Spawn();
-        mergedBlock.SetBlock(targetBlock.PowerOfTwo + 1, true, true);
+        mergedBlock.SetBlock(mergedPOT, true, true);
         mergedBlock.Coords = targetBlock.Coords;
         mergedBlock.transform.position = targetBlock.transform.position;
         
@@ -220,6 +230,10 @@ public class Board : DIBehaviour
         
         _levelController.BlocksPool.Despawn(block);
         _levelController.BlocksPool.Despawn(targetBlock);
+
+        Dispatch(NotificationType.BlocksMerge, NotificationParams.Get(mergedPOT));
+        
+        return true;
     }
 
     private Vector2 GetCellPosition(Coords coords)
@@ -238,6 +252,11 @@ public class Board : DIBehaviour
 
         for (int i = 0; i < _blocks.Length; i++)
         {
+            if (_blocks[i] == null)
+            {
+                continue;
+            }
+            
             _levelController.BlocksPool.Despawn(_blocks[i]);
         }
 

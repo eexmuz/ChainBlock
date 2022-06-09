@@ -18,11 +18,11 @@ MonoBehaviour:
     Complete: 0
   TargetValue:
     POT: 9
-    Value: 512
+    Number: 512
   StarMoves:
-    x: 4
+    x: 8
     y: 6
-    z: 8
+    z: 4
   Dimensions:
     x: 5
     y: 5

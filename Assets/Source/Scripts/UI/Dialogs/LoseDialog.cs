@@ -67,7 +67,7 @@ public class LoseDialog : BaseViewController
     private void OnRewardReceived()
     {
         CloseDialog();
-        Dispatch(NotificationType.OnRevive);
+        //Dispatch(NotificationType.OnRevive);
     }
 
     private void OnTimerEnd()

@@ -16,6 +16,13 @@ MonoBehaviour:
     Unlocked: 1
     Stars: 0
     Complete: 0
+  TargetValue:
+    POT: 8
+    Number: 256
+  StarMoves:
+    x: 15
+    y: 13
+    z: 11
   Dimensions:
     x: 5
     y: 5
@@ -31,7 +38,7 @@ MonoBehaviour:
       x: 2
       y: 2
     BlockInfo:
-      PowerOfTwo: 2
+      PowerOfTwo: 7
       Movable: 1
       Mergeable: 1
   - Coords:
