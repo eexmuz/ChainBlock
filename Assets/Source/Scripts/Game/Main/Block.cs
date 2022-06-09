@@ -27,6 +27,7 @@ public class Block : DIBehaviour
     public bool Mergeable { get; private set; }
     
     public Coords Coords { get; set; }
+    public bool JustMerged { get; set; }
     
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {

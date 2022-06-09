@@ -18,6 +18,12 @@ public class Board : DIBehaviour
 
     private Block[] _blocks;
     private Coords _dimensions;
+    private Queue<Block> _mergedBlocks;
+
+    protected override void OnAppInitialized()
+    {
+        _mergedBlocks = new Queue<Block>();
+    }
 
     public void SetupBoard(LevelData levelData)
     {
@@ -58,16 +64,8 @@ public class Board : DIBehaviour
                         continue;
                     }
 
-                    Block blockBelow = _blocks[Coords.Index(coords.x, coords.y - 1, _dimensions.x)];
-                    if (blockBelow == null)
-                    {
-                        anyChanges = true;
-                        SwipeBlock(block, direction);
-                    }
-                    else
-                    {
-                        anyChanges = TryMergeBlocks(block, blockBelow);
-                    }
+                    Block hit = SwipeBlock(block, direction, out anyChanges);
+                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
                 }
             }
         }
@@ -83,16 +81,8 @@ public class Board : DIBehaviour
                         continue;
                     }
 
-                    Block blockAbove = _blocks[Coords.Index(coords.x, coords.y + 1, _dimensions.x)];
-                    if (blockAbove == null)
-                    {
-                        anyChanges = true;
-                        SwipeBlock(block, direction);
-                    }
-                    else
-                    {
-                        anyChanges = TryMergeBlocks(block, blockAbove);
-                    }
+                    Block hit = SwipeBlock(block, direction, out anyChanges);
+                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
                 }
             }
         }
@@ -108,16 +98,8 @@ public class Board : DIBehaviour
                         continue;
                     }
 
-                    Block blockRight = _blocks[Coords.Index(coords.x + 1, coords.y, _dimensions.x)];
-                    if (blockRight == null)
-                    {
-                        anyChanges = true;
-                        SwipeBlock(block, direction);
-                    }
-                    else
-                    {
-                        anyChanges = TryMergeBlocks(block, blockRight);
-                    }
+                    Block hit = SwipeBlock(block, direction, out anyChanges);
+                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
                 }
             }
         }
@@ -133,32 +115,33 @@ public class Board : DIBehaviour
                         continue;
                     }
 
-                    Block blockRight = _blocks[Coords.Index(coords.x - 1, coords.y, _dimensions.x)];
-                    if (blockRight == null)
-                    {
-                        anyChanges = true;
-                        SwipeBlock(block, direction);
-                    }
-                    else
-                    {
-                        anyChanges = TryMergeBlocks(block, blockRight);
-                    }
+                    Block hit = SwipeBlock(block, direction, out anyChanges);
+                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
                 }
             }
         }
 
+        ClearMergedBlocks();
         return anyChanges;
     }
 
-    private void SwipeBlock(Block block, Direction direction)
+    private Block SwipeBlock(Block block, Direction direction, out bool moved)
     {
         Coords target = new Coords();
+        Block hit = null;
+        
         if (direction == Direction.Down)
         {
             target.x = block.Coords.x;
             for (target.y = block.Coords.y; ; target.y--)
             {
-                if (target.y == 0 || _blocks[Coords.Index(target.x, target.y - 1, _dimensions.x)] != null)
+                if (target.y == 0)
+                {
+                    break;
+                }
+                
+                hit = _blocks[Coords.Index(target.x, target.y - 1, _dimensions.x)];
+                if (hit != null)
                 {
                     break;
                 }
@@ -169,7 +152,13 @@ public class Board : DIBehaviour
             target.x = block.Coords.x;
             for (target.y = block.Coords.y; ; target.y++)
             {
-                if (target.y == _dimensions.y - 1 || _blocks[Coords.Index(target.x, target.y + 1, _dimensions.x)] != null)
+                if (target.y == _dimensions.y - 1)
+                {
+                    break;
+                }
+                
+                hit = _blocks[Coords.Index(target.x, target.y + 1, _dimensions.x)];
+                if (hit != null)
                 {
                     break;
                 }
@@ -180,7 +169,13 @@ public class Board : DIBehaviour
             target.y = block.Coords.y;
             for (target.x = block.Coords.x; ; target.x++)
             {
-                if (target.x == _dimensions.x - 1 || _blocks[Coords.Index(target.x + 1, target.y, _dimensions.x)] != null)
+                if (target.x == _dimensions.x - 1)
+                {
+                    break;
+                }
+                
+                hit = _blocks[Coords.Index(target.x + 1, target.y, _dimensions.x)];
+                if (hit != null)
                 {
                     break;
                 }
@@ -191,14 +186,22 @@ public class Board : DIBehaviour
             target.y = block.Coords.y;
             for (target.x = block.Coords.x; ; target.x--)
             {
-                if (target.x == 0 || _blocks[Coords.Index(target.x - 1, target.y, _dimensions.x)] != null)
+                if (target.x == 0)
+                {
+                    break;
+                }
+                
+                hit = _blocks[Coords.Index(target.x - 1, target.y, _dimensions.x)];
+                if (hit != null)
                 {
                     break;
                 }
             }
         }
 
+        moved = block.Coords.Equals(target) == false;
         MoveBlockTo(block, target);
+        return hit;
     }
 
     private void MoveBlockTo(Block block, Coords target)
@@ -211,7 +214,10 @@ public class Board : DIBehaviour
     
     private bool TryMergeBlocks(Block block, Block targetBlock)
     {
-        if (block.Mergeable == false || targetBlock.Mergeable == false || block.PowerOfTwo != targetBlock.PowerOfTwo)
+        if (block == null || targetBlock == null ||
+            block.Mergeable == false || targetBlock.Mergeable == false || 
+            block.JustMerged || targetBlock.JustMerged ||
+            block.PowerOfTwo != targetBlock.PowerOfTwo)
         {
             return false;
         }
@@ -226,6 +232,9 @@ public class Board : DIBehaviour
         mergedBlock.Coords = targetBlock.Coords;
         mergedBlock.transform.position = targetBlock.transform.position;
         
+        mergedBlock.JustMerged = true;
+        _mergedBlocks.Enqueue(mergedBlock);
+        
         _blocks[mergedBlock.Coords.Index(_dimensions.x)] = mergedBlock;
         
         _levelController.BlocksPool.Despawn(block);
@@ -234,6 +243,14 @@ public class Board : DIBehaviour
         Dispatch(NotificationType.BlocksMerge, NotificationParams.Get(mergedPOT));
         
         return true;
+    }
+    
+    private void ClearMergedBlocks()
+    {
+        while (_mergedBlocks.Count > 0)
+        {
+            _mergedBlocks.Dequeue().JustMerged = false;
+        }
     }
 
     private Vector2 GetCellPosition(Coords coords)
