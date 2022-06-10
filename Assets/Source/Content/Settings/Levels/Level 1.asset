@@ -17,12 +17,12 @@ MonoBehaviour:
     Stars: 0
     Complete: 0
   TargetValue:
-    POT: 9
-    Number: 512
+    POT: 10
+    Number: 1024
   StarMoves:
-    x: 8
-    y: 6
-    z: 4
+    x: 13
+    y: 11
+    z: 9
   Dimensions:
     x: 5
     y: 5
@@ -31,21 +31,21 @@ MonoBehaviour:
       x: 0
       y: 1
     BlockInfo:
-      PowerOfTwo: 5
-      Movable: 1
-      Mergeable: 1
+      PowerOfTwo: 0
+      Movable: 0
+      Mergeable: 0
   - Coords:
       x: 2
       y: 2
     BlockInfo:
-      PowerOfTwo: 5
+      PowerOfTwo: 8
       Movable: 1
       Mergeable: 1
   - Coords:
       x: 2
       y: 3
     BlockInfo:
-      PowerOfTwo: 6
+      PowerOfTwo: 9
       Movable: 0
       Mergeable: 1
   - Coords:
@@ -59,7 +59,7 @@ MonoBehaviour:
       x: 0
       y: 2
     BlockInfo:
-      PowerOfTwo: 4
+      PowerOfTwo: 7
       Movable: 1
       Mergeable: 1
   - Coords:
@@ -70,9 +70,9 @@ MonoBehaviour:
       Movable: 1
       Mergeable: 1
   - Coords:
-      x: 3
+      x: 4
       y: 2
     BlockInfo:
-      PowerOfTwo: 5
+      PowerOfTwo: 6
       Movable: 1
       Mergeable: 1

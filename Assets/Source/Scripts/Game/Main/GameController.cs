@@ -40,6 +40,7 @@ public class GameController : DIBehaviour
         Subscribe(NotificationType.LoadingLogoFaded, OnLoadingLogoFaded);
         Subscribe(NotificationType.OpenLevelFromMenu, OnOpenLevelFromMenu);
         Subscribe(NotificationType.LoadNextLevel, OnLoadNextLevel);
+        Subscribe(NotificationType.RestartLevel, OnRestartLevel);
         
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsStarted += (s, s1, arg3) => BlockUIWhilePlayingAd();
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsWatch += (s, s1, arg3, arg4) => UnlockUIAfterPlayingAd();
@@ -61,6 +62,11 @@ public class GameController : DIBehaviour
     private void OnLoadNextLevel(NotificationType notificationType, NotificationParams notificationParams)
     {
         LoadLevel(_playerDataService.LastLevel + 1);
+    }
+    
+    private void OnRestartLevel(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        LoadLevel(_playerDataService.LastLevel);
     }
 
     private void LoadLevel(int level)

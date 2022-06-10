@@ -55,5 +55,6 @@
         OnPlayerMove,
         BlocksMerge,
         PlayerReachedTargetNumber,
+        RestartLevel,
     }
 }

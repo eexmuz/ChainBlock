@@ -127,7 +127,7 @@ public class PauseDialog : BaseViewController
         }, false, AnalyticType.AppMetrica);
         
         CloseDialog();
-        Dispatch(NotificationType.LoadLevel);
+        Dispatch(NotificationType.RestartLevel);
     }
 
     public void OnLeaderboardButtonClick()
