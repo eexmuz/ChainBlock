@@ -9,6 +9,12 @@ public struct Coords
 
     public int Index(int width) => y * width + x;
 
+    public Coords(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+    
     public override bool Equals(object obj)
     {
         if (obj is Coords other)

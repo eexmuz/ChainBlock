@@ -9,7 +9,7 @@ public class LevelData : ScriptableObject
     public IntPOT TargetValue;
     [Tooltip("X = 0 stars, Y = 1 star, Z = 2 stars")]
     public int3 StarMoves;
-    public Coords Dimensions;
+    public int2 Dimensions;
     public List<BoardCellData> CellsData;
 
     public int LevelIndex { get; set; }

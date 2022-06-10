@@ -21,8 +21,8 @@ MonoBehaviour:
     Number: 256
   StarMoves:
     x: 14
-    y: 12
-    z: 10
+    y: 10
+    z: 8
   Dimensions:
     x: 5
     y: 5

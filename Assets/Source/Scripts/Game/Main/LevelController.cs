@@ -1,5 +1,6 @@
 using Core;
 using Core.Attributes;
+using Core.Notifications;
 using Core.Services;
 using Core.Settings;
 using UnityEngine;
@@ -49,15 +50,16 @@ public class LevelController : DIBehaviour
         if (mergedPOT >= _gameService.CurrentLevel.TargetValue.POT)
         {
             Dispatch(NotificationType.PlayerReachedTargetNumber);
-            Debug.Log("YOU WON");
+            Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None, _movesCounter));
         }
     }
 
     private void OnLoadLevel(NotificationType notificationType, NotificationParams notificationParams)
     {
-        int levelIndex = (int) notificationParams.Data;
+        int levelIndex = Mathf.Min((int) notificationParams.Data, _gameSettings.Levels.Count - 1);
         LevelData level = _gameSettings.Levels[levelIndex];
         level.LevelIndex = levelIndex;
+        _playerDataService.LastLevel = levelIndex;
         
         _board.SetupBoard(level);
 

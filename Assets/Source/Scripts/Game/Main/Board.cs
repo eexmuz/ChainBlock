@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core;
 using Core.Attributes;
 using Core.Settings;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Board : DIBehaviour
@@ -17,7 +18,7 @@ public class Board : DIBehaviour
     private GameSettings _gameSettings;
 
     private Block[] _blocks;
-    private Coords _dimensions;
+    private int2 _dimensions;
     private Queue<Block> _mergedBlocks;
 
     protected override void OnAppInitialized()
