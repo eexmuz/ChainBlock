@@ -25,6 +25,9 @@ namespace Core.Settings
         public Block BlockPrefab;
         public Vector2 CellSize;
 
+        public float SwipeAnimationDuration;
+
         #endregion
+
     }
 }

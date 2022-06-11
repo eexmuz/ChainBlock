@@ -28,6 +28,7 @@ public class Block : DIBehaviour
     
     public Coords Coords { get; set; }
     public bool JustMerged { get; set; }
+    public Coords TargetCoords { get; set; }
     
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {

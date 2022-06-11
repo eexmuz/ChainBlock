@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core;
 using Core.Attributes;
 using Core.Settings;
+using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -20,10 +21,14 @@ public class Board : DIBehaviour
     private Block[] _blocks;
     private int2 _dimensions;
     private Queue<Block> _mergedBlocks;
+    private Queue<Block> _blocksToDestroy;
+    private Queue<Block> _blocksToSpawn;
 
     protected override void OnAppInitialized()
     {
         _mergedBlocks = new Queue<Block>();
+        _blocksToDestroy = new Queue<Block>();
+        _blocksToSpawn = new Queue<Block>();
     }
 
     public void SetupBoard(LevelData levelData)
@@ -67,6 +72,11 @@ public class Board : DIBehaviour
 
                     Block hit = SwipeBlock(block, direction, out anyChanges);
                     anyChanges = TryMergeBlocks(block, hit) || anyChanges;
+                    
+                    if (block.Coords.Equals(coords) == false)
+                    {
+                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                    }
                 }
             }
         }
@@ -84,6 +94,11 @@ public class Board : DIBehaviour
 
                     Block hit = SwipeBlock(block, direction, out anyChanges);
                     anyChanges = TryMergeBlocks(block, hit) || anyChanges;
+                    
+                    if (block.Coords.Equals(coords) == false)
+                    {
+                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                    }
                 }
             }
         }
@@ -101,6 +116,11 @@ public class Board : DIBehaviour
 
                     Block hit = SwipeBlock(block, direction, out anyChanges);
                     anyChanges = TryMergeBlocks(block, hit) || anyChanges;
+                    
+                    if (block.Coords.Equals(coords) == false)
+                    {
+                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                    }
                 }
             }
         }
@@ -118,11 +138,17 @@ public class Board : DIBehaviour
 
                     Block hit = SwipeBlock(block, direction, out anyChanges);
                     anyChanges = TryMergeBlocks(block, hit) || anyChanges;
+
+                    if (block.Coords.Equals(coords) == false)
+                    {
+                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                    }
                 }
             }
         }
 
         ClearMergedBlocks();
+        Invoke(nameof(OnSwipeAnimationEnd), _gameSettings.SwipeAnimationDuration);
         return anyChanges;
     }
 
@@ -210,7 +236,6 @@ public class Board : DIBehaviour
         _blocks[block.Coords.Index(_dimensions.x)] = null;
         _blocks[target.Index(_dimensions.x)] = block;
         block.Coords = target;
-        block.transform.position = GetCellPosition(target);
     }
     
     private bool TryMergeBlocks(Block block, Block targetBlock)
@@ -231,19 +256,38 @@ public class Board : DIBehaviour
         Block mergedBlock = _levelController.BlocksPool.Spawn();
         mergedBlock.SetBlock(mergedPOT, true, true);
         mergedBlock.Coords = targetBlock.Coords;
-        mergedBlock.transform.position = targetBlock.transform.position;
+        mergedBlock.transform.position = GetCellPosition(mergedBlock.Coords);
         
         mergedBlock.JustMerged = true;
         _mergedBlocks.Enqueue(mergedBlock);
         
         _blocks[mergedBlock.Coords.Index(_dimensions.x)] = mergedBlock;
+        mergedBlock.gameObject.SetActive(false);
+        _blocksToSpawn.Enqueue(mergedBlock);
         
-        _levelController.BlocksPool.Despawn(block);
-        _levelController.BlocksPool.Despawn(targetBlock);
+        block.Coords = mergedBlock.Coords;
+        _blocksToDestroy.Enqueue(block);
+
+        targetBlock.Coords = mergedBlock.Coords;
+        _blocksToDestroy.Enqueue(targetBlock);
+        
 
         Dispatch(NotificationType.BlocksMerge, NotificationParams.Get(mergedPOT));
         
         return true;
+    }
+
+    private void OnSwipeAnimationEnd()
+    {
+        while (_blocksToSpawn.Count > 0)
+        {
+            _blocksToSpawn.Dequeue().gameObject.SetActive(true);
+        }
+
+        while (_blocksToDestroy.Count > 0)
+        {
+            _levelController.BlocksPool.Despawn(_blocksToDestroy.Dequeue());
+        }
     }
     
     private void ClearMergedBlocks()
