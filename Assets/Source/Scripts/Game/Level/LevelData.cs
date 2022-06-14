@@ -13,4 +13,22 @@ public class LevelData : ScriptableObject
     public List<BoardCellData> CellsData;
 
     public int LevelIndex { get; set; }
+
+    public int CalculateStars(int moves)
+    {
+        int stars = 3;
+        for (int i = 2; i >= 0; i--)
+        {
+            if (moves >= StarMoves[i])
+            {
+                stars--;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return stars;
+    }
 }

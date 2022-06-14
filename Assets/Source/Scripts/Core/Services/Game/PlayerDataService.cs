@@ -148,31 +148,22 @@ namespace Core.Services
             return _levelStatusList[level].Complete;
         }
 
-        public void CompleteCurrentLevel(int stars)
+        public void CompleteLevel(int levelIndex, int stars)
         {
-            _levelStatusList[LastLevel].Complete = true;
-            
-            if (stars < _levelStatusList[LastLevel].Stars)
+            if (levelIndex < 0 || levelIndex > _levelStatusList.Count - 1)
             {
                 return;
             }
             
-            _levelStatusList[LastLevel].Stars = stars;
-
-            if (LastLevel + 1 >= _levelStatusList.Count)
+            _levelStatusList[levelIndex].Complete = true;
+            
+            if (stars < _levelStatusList[levelIndex].Stars)
             {
-                for (int i = 0; i < 15; i++)
-                {
-                    _levelStatusList.Add(new LevelStatus
-                    {
-                        Complete = false,
-                        Stars = 0,
-                        Unlocked = false,
-                    });
-                }
+                return;
             }
-
-            _levelStatusList[LastLevel + 1].Unlocked = true;
+            
+            _levelStatusList[levelIndex].Stars = stars;
+            _levelStatusList[Mathf.Min(LastLevel + 1, _levelStatusList.Count - 1)].Unlocked = true;
 
             SaveLevelsProgress();
         }

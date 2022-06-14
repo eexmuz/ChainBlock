@@ -50,6 +50,7 @@ public class LevelController : DIBehaviour
         if (mergedPOT >= _gameService.CurrentLevel.TargetValue.POT)
         {
             Dispatch(NotificationType.PlayerReachedTargetNumber);
+            _playerDataService.CompleteLevel(_gameService.CurrentLevel.LevelIndex, _gameService.CurrentLevel.CalculateStars(_movesCounter));
             Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None, _movesCounter));
         }
     }

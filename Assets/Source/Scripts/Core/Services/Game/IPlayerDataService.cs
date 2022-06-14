@@ -38,7 +38,7 @@ namespace Core.Services
         bool CanShowRateUs();
 
         bool IsLevelComplete(int level);
-        void CompleteCurrentLevel(int stars);
+        void CompleteLevel(int levelIndex, int stars);
 
         #endregion
     }
