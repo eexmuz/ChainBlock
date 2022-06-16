@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Core;
 using Core.Attributes;
 using Core.Notifications;
@@ -15,6 +16,9 @@ public enum Direction
 
 public class LevelController : DIBehaviour
 {
+    [SerializeField]
+    private CameraController _camera;
+    
     [SerializeField]
     private Board _board;
 
@@ -61,7 +65,8 @@ public class LevelController : DIBehaviour
         LevelData level = _gameSettings.Levels[levelIndex];
         level.LevelIndex = levelIndex;
         _playerDataService.LastLevel = levelIndex;
-        
+
+        _camera.SetupCamera(level);
         _board.SetupBoard(level);
 
         _movesCounter = 0;
@@ -72,6 +77,7 @@ public class LevelController : DIBehaviour
     private void GenerateRandomLevel()
     {
         LevelData levelData = LevelGenerator.GenerateLevel();
+        
         _board.SetupBoard(levelData);
     }
 
