@@ -472,6 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565893b43edca7046a0876e9474fc7b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _victoryDelay: 0
   _levelController: {fileID: 903088072}
   _boardModel: {fileID: 1587320106}
 --- !u!1 &634897229
@@ -982,6 +983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ca17e82c84c6a242ae7bbfa0ac2b403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _victoryDelay: 0.5
   _camera: {fileID: 1094788966}
   _board: {fileID: 574526659}
 --- !u!1 &925005007

@@ -17,6 +17,8 @@ public enum Direction
 public class LevelController : DIBehaviour
 {
     [SerializeField]
+    private float _victoryDelay = .5f;
+    [SerializeField]
     private CameraController _camera;
     
     [SerializeField]
@@ -31,7 +33,11 @@ public class LevelController : DIBehaviour
     [Inject]
     private IGameService _gameService;
 
+    [Inject]
+    private IDelayedCallService _delayedCallService;
+
     private int _movesCounter;
+    private bool _playing;
 
     public ObjectPool<Block> BlocksPool { get; private set; }
 
@@ -53,9 +59,10 @@ public class LevelController : DIBehaviour
         int mergedPOT = (int) notificationParams.Data;
         if (mergedPOT >= _gameService.CurrentLevel.TargetValue.POT)
         {
+            _playing = false;
             Dispatch(NotificationType.PlayerReachedTargetNumber);
             _playerDataService.CompleteLevel(_gameService.CurrentLevel.LevelIndex, _gameService.CurrentLevel.CalculateStars(_movesCounter));
-            Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None, _movesCounter));
+            _delayedCallService.DelayedCall(_victoryDelay, () => Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None, _movesCounter)));
         }
     }
 
@@ -70,7 +77,8 @@ public class LevelController : DIBehaviour
         _board.SetupBoard(level);
 
         _movesCounter = 0;
-        
+
+        _playing = true;
         Dispatch(NotificationType.LevelLoaded, NotificationParams.Get(level));
     }
 
@@ -83,16 +91,16 @@ public class LevelController : DIBehaviour
 
     private void OnSwipe(Direction direction)
     {
+        if (_playing == false)
+        {
+            return;
+        }
+        
         bool anyChanges = _board.Swipe(direction);
         if (anyChanges)
         {
             _movesCounter++;
             Dispatch(NotificationType.OnPlayerMove, NotificationParams.Get(_movesCounter));
         }
-    }
-
-    public void LoadLevel(int level)
-    {
-        _board.SetupBoard(_gameSettings.Levels[level]);
     }
 }

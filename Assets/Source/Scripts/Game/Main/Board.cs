@@ -6,9 +6,13 @@ using Core.Settings;
 using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
+using Utility;
 
 public class Board : DIBehaviour
 {
+    [SerializeField]
+    private float _victoryDelay;
+    
     [SerializeField]
     private LevelController _levelController;
 
@@ -23,12 +27,16 @@ public class Board : DIBehaviour
     private Queue<Block> _mergedBlocks;
     private Queue<Block> _blocksToDestroy;
     private Queue<Block> _blocksToSpawn;
+    private Pair<bool, Direction> _queuedSwipeDirection;
+
+    private bool _animating;
 
     protected override void OnAppInitialized()
     {
         _mergedBlocks = new Queue<Block>();
         _blocksToDestroy = new Queue<Block>();
         _blocksToSpawn = new Queue<Block>();
+        _queuedSwipeDirection = new Pair<bool, Direction>(false, Direction.Down);
     }
 
     public void SetupBoard(LevelData levelData)
@@ -54,6 +62,13 @@ public class Board : DIBehaviour
     
     public bool Swipe(Direction direction)
     {
+        if (_animating)
+        {
+            _queuedSwipeDirection.First = true;
+            _queuedSwipeDirection.Second = direction;
+            return false;
+        }
+        
         Coords coords = new Coords();
 
         bool anyChanges = false;
@@ -148,6 +163,8 @@ public class Board : DIBehaviour
         }
 
         ClearMergedBlocks();
+
+        _animating = true;
         Invoke(nameof(OnSwipeAnimationEnd), _gameSettings.SwipeAnimationDuration);
         return anyChanges;
     }
@@ -279,6 +296,7 @@ public class Board : DIBehaviour
 
     private void OnSwipeAnimationEnd()
     {
+        _animating = false;
         while (_blocksToSpawn.Count > 0)
         {
             _blocksToSpawn.Dequeue().gameObject.SetActive(true);
@@ -287,6 +305,12 @@ public class Board : DIBehaviour
         while (_blocksToDestroy.Count > 0)
         {
             _levelController.BlocksPool.Despawn(_blocksToDestroy.Dequeue());
+        }
+
+        if (_queuedSwipeDirection.First)
+        {
+            _queuedSwipeDirection.First = false;
+            Swipe(_queuedSwipeDirection.Second);
         }
     }
     

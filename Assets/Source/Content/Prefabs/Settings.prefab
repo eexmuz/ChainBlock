@@ -49,12 +49,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82d7aab12d1f0c54abf946f02d0dc0d7, type: 2}
   - {fileID: 11400000, guid: c3f4715e17d034443a3fd3b5bb1bd682, type: 2}
   - {fileID: 11400000, guid: ebd3f783a9abbf34c9ebf2690b4ea994, type: 2}
-  - {fileID: 11400000, guid: baafe14fc1bc4f644abde31b5d971bb3, type: 2}
   - {fileID: 11400000, guid: 277f96c1b947f1142b37161dd6dea74e, type: 2}
   - {fileID: 11400000, guid: 9fc9b7b1d1f4d514cba168c3be344adc, type: 2}
   - {fileID: 11400000, guid: ea0345c7b0a67824e864053d50cc6d76, type: 2}
   - {fileID: 11400000, guid: 73601d9ac48b7894e8a9708bbb6afac8, type: 2}
-  - {fileID: 11400000, guid: 89dc8cf71b08dda4fb0fb301f58c9fe2, type: 2}
 --- !u!114 &5294509261049292643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc98219a83dff145947365dc914d06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapThreshold: 0.2
+  tapThreshold: 1
   swipeThreshold: 100
   referenceDpi: 200
   guiLayers:
