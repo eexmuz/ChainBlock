@@ -61,7 +61,7 @@ public class LoseDialog : BaseViewController
     {
         CloseDialog();
         Dispatch(NotificationType.LevelFailed);
-        Dispatch(NotificationType.LoadLevel);
+        Dispatch(NotificationType.LoadNewLevel);
     }
 
     private void OnRewardReceived()

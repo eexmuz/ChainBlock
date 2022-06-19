@@ -18,6 +18,7 @@ public class LevelController : DIBehaviour
 {
     [SerializeField]
     private float _victoryDelay = .5f;
+    
     [SerializeField]
     private CameraController _camera;
     
@@ -48,10 +49,21 @@ public class LevelController : DIBehaviour
 
     protected override void OnAppInitialized()
     {
-        Subscribe(NotificationType.LoadLevel, OnLoadLevel);
+        Subscribe(NotificationType.LoadNewLevel, OnLoadNewLevel);
+        Subscribe(NotificationType.LoadSavedLevel, OnLoadSavedLevel);
         Subscribe(NotificationType.GenerateRandomLevel, (a, b) => GenerateRandomLevel());
         Subscribe(NotificationType.BlocksMerge, OnBlocksMerge);
         BlocksPool = new ObjectPool<Block>(_gameSettings.BlockPrefab, 36, transform);
+    }
+
+    private LevelData GetLevelData()
+    {
+        return new LevelData
+        {
+            BlocksData = _board.GetBlocksData(),
+            MovesCount = _movesCounter,
+            LevelIndex = _gameService.CurrentLevel.LevelIndex,
+        };
     }
 
     private void OnBlocksMerge(NotificationType notificationType, NotificationParams notificationParams)
@@ -66,27 +78,43 @@ public class LevelController : DIBehaviour
         }
     }
 
-    private void OnLoadLevel(NotificationType notificationType, NotificationParams notificationParams)
+    private void OnLoadNewLevel(NotificationType notificationType, NotificationParams notificationParams)
     {
         int levelIndex = Mathf.Min((int) notificationParams.Data, _gameSettings.Levels.Count - 1);
-        LevelData level = _gameSettings.Levels[levelIndex];
+        LevelConfig level = _gameSettings.Levels[levelIndex];
         level.LevelIndex = levelIndex;
         _playerDataService.LastLevel = levelIndex;
+        
+        LoadLevel(level);
+    }
+    
+    private void OnLoadSavedLevel(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        LevelData savedData = (LevelData) notificationParams.Data;
+        LevelConfig level = _gameSettings.Levels[savedData.LevelIndex];
+        level.LevelIndex = savedData.LevelIndex;
+        _playerDataService.LastLevel = savedData.LevelIndex;
+        
+        LoadLevel(level, savedData);
+    }
 
-        _camera.SetupCamera(level);
-        _board.SetupBoard(level);
+    private void LoadLevel(LevelConfig levelConfig, LevelData savedData = null)
+    {
+        _camera.SetupCamera(levelConfig);
+        _board.SetupBoard(levelConfig, savedData);
 
-        _movesCounter = 0;
+        _movesCounter = savedData?.MovesCount ?? 0;
 
         _playing = true;
-        Dispatch(NotificationType.LevelLoaded, NotificationParams.Get(level));
+        Dispatch(NotificationType.LevelLoaded, NotificationParams.Get(levelConfig));
+        Dispatch(NotificationType.MovesCounterChanged, NotificationParams.Get(_movesCounter));
     }
 
     private void GenerateRandomLevel()
     {
-        LevelData levelData = LevelGenerator.GenerateLevel();
+        LevelConfig levelConfig = LevelGenerator.GenerateLevel();
         
-        _board.SetupBoard(levelData);
+        _board.SetupBoard(levelConfig);
     }
 
     private void OnSwipe(Direction direction)
@@ -100,7 +128,24 @@ public class LevelController : DIBehaviour
         if (anyChanges)
         {
             _movesCounter++;
-            Dispatch(NotificationType.OnPlayerMove, NotificationParams.Get(_movesCounter));
+            Dispatch(NotificationType.MovesCounterChanged, NotificationParams.Get(_movesCounter));
         }
+    }
+
+    private void OnApplicationPause(bool paused)
+    {
+        if (paused == false)
+        {
+            return;
+        }
+
+        Debug.Log("Saving level data . . .");
+        _playerDataService.LevelData = GetLevelData();
+    }
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Saving level data . . .");
+        _playerDataService.LevelData = GetLevelData();
     }
 }

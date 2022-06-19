@@ -97,6 +97,12 @@ namespace Core.Services
             set => _playerPrefsService.SetInt(PlayerPrefsKeys.LAST_LEVEL, value);
         }
 
+        public LevelData LevelData
+        {
+            get => LoadLevelData();
+            set => SaveLevelData(value);
+        }
+
         public int HighestOpenedLevel
         {
             get
@@ -173,6 +179,18 @@ namespace Core.Services
         private void LoadPlayerData()
         {
             LoadLevelsProgress();
+        }
+
+        private LevelData LoadLevelData()
+        {
+            string json = _playerPrefsService.GetString(PlayerPrefsKeys.LEVEL_DATA);
+            return string.IsNullOrEmpty(json) ? null : JsonUtility.FromJson<LevelData>(json);
+        }
+
+        private void SaveLevelData(LevelData levelData)
+        {
+            string json = JsonUtility.ToJson(levelData);
+            _playerPrefsService.SetString(PlayerPrefsKeys.LEVEL_DATA, json);
         }
 
         private void LoadLevelsProgress()

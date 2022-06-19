@@ -19,6 +19,7 @@ namespace Core.Services
         int LastLevel { get; set; }
         int HighestOpenedLevel { get; }
         List<LevelStatus> LevelStatusList { get; }
+        LevelData LevelData { get; set; }
         
 
         /// <summary>

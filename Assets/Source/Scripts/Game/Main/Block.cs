@@ -28,7 +28,6 @@ public class Block : DIBehaviour
     
     public Coords Coords { get; set; }
     public bool JustMerged { get; set; }
-    public Coords TargetCoords { get; set; }
     
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {
@@ -53,5 +52,19 @@ public class Block : DIBehaviour
     public void SetBlock(BlockInfo blockInfo)
     {
         SetBlock(blockInfo.PowerOfTwo, blockInfo.Movable, blockInfo.Mergeable);
+    }
+
+    public BoardCellData GetBlockData()
+    {
+        return new BoardCellData
+        {
+            Coords = Coords,
+            BlockInfo = new BlockInfo
+            {
+                Mergeable = Mergeable,
+                Movable = Movable,
+                PowerOfTwo = PowerOfTwo,
+            }
+        };
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IGameService : IService
     {
-        LevelData CurrentLevel { get; }
+        LevelConfig CurrentLevel { get; }
     }
 }

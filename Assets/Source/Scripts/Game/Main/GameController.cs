@@ -44,8 +44,16 @@ public class GameController : DIBehaviour
         
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsStarted += (s, s1, arg3) => BlockUIWhilePlayingAd();
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsWatch += (s, s1, arg3, arg4) => UnlockUIAfterPlayingAd();
-        
-        Dispatch(NotificationType.LoadLevel, NotificationParams.Get(_playerDataService.HighestOpenedLevel));
+
+        LevelData savedData = _playerDataService.LevelData;
+        if (savedData == null)
+        {
+            Dispatch(NotificationType.LoadNewLevel, NotificationParams.Get(_playerDataService.HighestOpenedLevel));
+        }
+        else
+        {
+            Dispatch(NotificationType.LoadSavedLevel, NotificationParams.Get(savedData));
+        }
     }
 
     private void OnLoadingLogoFaded(NotificationType notificationType, NotificationParams notificationParams)
@@ -71,8 +79,8 @@ public class GameController : DIBehaviour
 
     private void LoadLevel(int level)
     {
-        Dispatch(NotificationType.OnLevelEnd);
-        Dispatch(NotificationType.LoadLevel, NotificationParams.Get(level));
+        Dispatch(NotificationType.LevelEnd);
+        Dispatch(NotificationType.LoadNewLevel, NotificationParams.Get(level));
     }
 
     private void BlockUIWhilePlayingAd()

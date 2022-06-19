@@ -5,7 +5,7 @@ namespace Core.Services
     [InjectionAlias(typeof(IGameService))]
     public class GameService : Service, IGameService
     {
-        public LevelData CurrentLevel { get; private set; }
+        public LevelConfig CurrentLevel { get; private set; }
 
         public override void Run()
         {
@@ -15,7 +15,7 @@ namespace Core.Services
 
         private void OnLevelLoaded(NotificationType notificationType, NotificationParams notificationParams)
         {
-            CurrentLevel = (LevelData) notificationParams.Data;
+            CurrentLevel = (LevelConfig) notificationParams.Data;
         }
     }
 }

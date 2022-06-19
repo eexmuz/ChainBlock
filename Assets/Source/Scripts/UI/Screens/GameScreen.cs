@@ -40,7 +40,7 @@ public class GameScreen : DIBehaviour
         IntegrationSubsystem.Instance.AdsService.ShowBanner();
         
         Subscribe(NotificationType.LevelLoaded, OnLevelLoaded);
-        Subscribe(NotificationType.OnPlayerMove, OnPlayerMove);
+        Subscribe(NotificationType.MovesCounterChanged, OnPlayerMove);
 
         foreach (var button in GetComponentsInChildren<Button>())
         {
@@ -60,7 +60,7 @@ public class GameScreen : DIBehaviour
 
     private void OnLevelLoaded(NotificationType notificationType, NotificationParams notificationParams)
     {
-        LevelData loadedLevel = (LevelData) notificationParams.Data;
+        LevelConfig loadedLevel = (LevelConfig) notificationParams.Data;
         _levelNumber.text = "LEVEL " + (loadedLevel.LevelIndex + 1);
         _targetBlockNumber.text = loadedLevel.TargetValue.Number.ToString();
         _targetBlockImage.color = _gameSettings.BlockColors.GetColor(loadedLevel.TargetValue);
@@ -68,8 +68,6 @@ public class GameScreen : DIBehaviour
         {
             star.SetActive(true);
         }
-
-        _moves.text = "MOVES: 0";
     }
 
     public void OnPauseButtonClick()

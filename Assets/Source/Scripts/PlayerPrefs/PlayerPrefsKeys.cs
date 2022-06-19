@@ -52,6 +52,7 @@ namespace Data
         public const string LAST_LEVEL = "last_level";
         
         public static string SOFT_TUTOR_COMPLETE = "soft_tutor_complete";
+        public static string LEVEL_DATA = "level_data";
 
         // public const string NEW_SHOP_ITEM_NOTIFY_ICON = "NewShopTankNotifyIcon";
         // public const string NEW_ITEM_NOTIFY_ICON = "NewTankNotifyIcon";

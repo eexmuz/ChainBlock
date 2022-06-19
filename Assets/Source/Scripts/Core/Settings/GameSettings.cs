@@ -19,7 +19,7 @@ namespace Core.Settings
         /// </summary>
         public GameObject loader;
 
-        public List<LevelData> Levels;
+        public List<LevelConfig> Levels;
         public BlockColorSettings BlockColors;
 
         public Block BlockPrefab;

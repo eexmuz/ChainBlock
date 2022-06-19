@@ -46,15 +46,16 @@
         
         PauseStateChanged,
         OpenLevelFromMenu,
-        LoadLevel,
+        LoadNewLevel,
         LoadNextLevel,
-        OnLevelEnd,
+        LevelEnd,
         LevelLoaded,
         LevelFailed,
         GenerateRandomLevel,
-        OnPlayerMove,
+        MovesCounterChanged,
         BlocksMerge,
         PlayerReachedTargetNumber,
         RestartLevel,
+        LoadSavedLevel,
     }
 }

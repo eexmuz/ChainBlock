@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core;
 using Core.Attributes;
 using Core.Settings;
@@ -28,7 +29,6 @@ public class Board : DIBehaviour
     private Queue<Block> _blocksToDestroy;
     private Queue<Block> _blocksToSpawn;
     private Pair<bool, Direction> _queuedSwipeDirection;
-
     private bool _animating;
 
     protected override void OnAppInitialized()
@@ -39,14 +39,14 @@ public class Board : DIBehaviour
         _queuedSwipeDirection = new Pair<bool, Direction>(false, Direction.Down);
     }
 
-    public void SetupBoard(LevelData levelData)
+    public void SetupBoard(LevelConfig levelConfig, LevelData savedData = null)
     {
         ClearBoard();
         
-        _dimensions = levelData.Dimensions;
+        _dimensions = levelConfig.Dimensions;
         _blocks = new Block[_dimensions.x * _dimensions.y];
         
-        foreach (var cell in levelData.CellsData)
+        foreach (var cell in savedData == null ? levelConfig.CellsData : savedData.BlocksData)
         {
             Block block = _levelController.BlocksPool.Spawn();
             block.SetBlock(cell.BlockInfo);
@@ -59,7 +59,7 @@ public class Board : DIBehaviour
         _boardModel.transform.localScale = new Vector3(_dimensions.x * _gameSettings.CellSize.x,
             _dimensions.y * _gameSettings.CellSize.y, _boardModel.transform.localScale.z);
     }
-    
+
     public bool Swipe(Direction direction)
     {
         if (_animating)
@@ -347,5 +347,10 @@ public class Board : DIBehaviour
         }
 
         _blocks = null;
+    }
+
+    public List<BoardCellData> GetBlocksData()
+    {
+        return _blocks.Where(block => block != null).Select(block => block.GetBlockData()).ToList();
     }
 }

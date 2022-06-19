@@ -14,9 +14,9 @@ public class CameraController : DIBehaviour
     [Inject]
     private GameSettings _gameSettings;
     
-    public void SetupCamera(LevelData levelData)
+    public void SetupCamera(LevelConfig levelConfig)
     {
-        float boardWidth = levelData.Dimensions.x * _gameSettings.CellSize.x + _borderWidth;
+        float boardWidth = levelConfig.Dimensions.x * _gameSettings.CellSize.x + _borderWidth;
         float tanFOV = Mathf.Tan(Camera.VerticalToHorizontalFieldOfView(_camera.fieldOfView, _camera.aspect) * Mathf.Deg2Rad);
 
         var position = _camera.transform.position;

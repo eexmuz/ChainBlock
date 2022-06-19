@@ -2,14 +2,14 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(LevelData))]
+[CustomEditor(typeof(LevelConfig))]
 public class LevelDataEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        var duplicate = ((LevelData) target).CellsData
+        var duplicate = ((LevelConfig) target).CellsData
             .GroupBy(c => c.Coords)
             .FirstOrDefault(g => g.Count() > 1);
 
@@ -23,18 +23,18 @@ public class LevelDataEditor : Editor
 
     private void DrawBoardPreview()
     {
-        LevelData levelData = target as LevelData;
+        LevelConfig levelConfig = target as LevelConfig;
         Coords coords = new Coords();
         GUIStyle style = GUI.skin.box;
         style.alignment = TextAnchor.MiddleCenter;
 
         EditorGUI.BeginDisabledGroup(true);
-        for (coords.y = levelData.Dimensions.y - 1; coords.y >= 0; coords.y--)
+        for (coords.y = levelConfig.Dimensions.y - 1; coords.y >= 0; coords.y--)
         {
             EditorGUILayout.BeginHorizontal();
-            for (coords.x = 0; coords.x < levelData.Dimensions.x; coords.x++)
+            for (coords.x = 0; coords.x < levelConfig.Dimensions.x; coords.x++)
             {
-                BlockInfo blockInfo = levelData.CellsData.FirstOrDefault(c => c.Coords.Equals(coords))?.BlockInfo;
+                BlockInfo blockInfo = levelConfig.CellsData.FirstOrDefault(c => c.Coords.Equals(coords))?.BlockInfo;
                 string display = "";
                 if (blockInfo != null)
                 {
