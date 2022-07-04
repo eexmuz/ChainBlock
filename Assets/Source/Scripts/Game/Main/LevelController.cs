@@ -110,13 +110,6 @@ public class LevelController : DIBehaviour
         Dispatch(NotificationType.MovesCounterChanged, NotificationParams.Get(_movesCounter));
     }
 
-    private void GenerateRandomLevel()
-    {
-        LevelConfig levelConfig = LevelGenerator.GenerateLevel();
-        
-        _board.SetupBoard(levelConfig);
-    }
-
     private void OnSwipe(Direction direction)
     {
         if (_playing == false)
