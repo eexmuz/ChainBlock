@@ -51,7 +51,6 @@ public class LevelController : DIBehaviour
     {
         Subscribe(NotificationType.LoadNewLevel, OnLoadNewLevel);
         Subscribe(NotificationType.LoadSavedLevel, OnLoadSavedLevel);
-        Subscribe(NotificationType.GenerateRandomLevel, (a, b) => GenerateRandomLevel());
         Subscribe(NotificationType.BlocksMerge, OnBlocksMerge);
         BlocksPool = new ObjectPool<Block>(_gameSettings.BlockPrefab, 36, transform);
     }
