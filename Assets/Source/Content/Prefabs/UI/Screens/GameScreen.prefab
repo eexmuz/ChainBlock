@@ -2477,7 +2477,6 @@ GameObject:
   - component: {fileID: 1578047588380883857}
   - component: {fileID: 6844028408577318804}
   - component: {fileID: 2355496115114980473}
-  - component: {fileID: 653483450239481566}
   m_Layer: 5
   m_Name: GameScreen
   m_TagString: Untagged
@@ -2537,23 +2536,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &653483450239481566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736018633375466352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 471f9911ecf51a644b0e73444296b140, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetBlockNumber: {fileID: 0}
-  _targetBlockImage: {fileID: 0}
-  _levelNumber: {fileID: 0}
-  _moves: {fileID: 0}
-  _stars: []
 --- !u!1 &5038601440710255871
 GameObject:
   m_ObjectHideFlags: 0

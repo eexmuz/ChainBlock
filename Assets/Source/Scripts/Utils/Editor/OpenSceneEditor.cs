@@ -14,7 +14,7 @@ public static class OpenSceneEditor
     [MenuItem(MenuPrefix + "ChainBlock", false, 1)]
     private static void OpenLobby()
     {
-        OpenCommonScene("ChainBlock");
+        OpenCommonScene("ChainBlockArt");
     }
 
     [MenuItem(MenuPrefix + "UI", false, 2)]

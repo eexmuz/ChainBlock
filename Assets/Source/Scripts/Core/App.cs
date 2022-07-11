@@ -255,11 +255,6 @@ namespace Core
         [UsedImplicitly]
         private static void Initialize()
         {
-            if (SceneManager.GetActiveScene().buildIndex != Scenes.PRELOADER)
-            {
-                return;
-            }
-
 #if UNITY_EDITOR
             Application.runInBackground = true;
 #else
@@ -284,7 +279,7 @@ namespace Core
 
             Application.backgroundLoadingPriority = ThreadPriority.Low;
 
-            //if (SceneManager.GetActiveScene().buildIndex != Scenes.PRELOADER) SceneManager.LoadScene(Scenes.PRELOADER);
+            if (SceneManager.GetActiveScene().buildIndex != Scenes.PRELOADER) SceneManager.LoadScene(Scenes.PRELOADER);
 
             AddSubsystem<AudioSubsystem>();
             AddSubsystem<GameSubsystem>();

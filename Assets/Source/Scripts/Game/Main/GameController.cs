@@ -44,7 +44,10 @@ public class GameController : DIBehaviour
         
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsStarted += (s, s1, arg3) => BlockUIWhilePlayingAd();
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsWatch += (s, s1, arg3, arg4) => UnlockUIAfterPlayingAd();
+    }
 
+    private void Start()
+    {
         LevelData savedData = _playerDataService.LevelData;
         if (savedData == null)
         {

@@ -2779,6 +2779,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 1736018633375466352, guid: 795c5a0b7bcb56146bda47fd9e0be193, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795c5a0b7bcb56146bda47fd9e0be193, type: 3}
 --- !u!1001 &602438766262862011
@@ -3144,7 +3148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1001 &4201560336557744413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3685,7 +3689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &7845150518370141079
 GameObject:
   m_ObjectHideFlags: 0

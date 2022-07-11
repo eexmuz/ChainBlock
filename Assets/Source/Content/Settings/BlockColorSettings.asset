@@ -48,7 +48,7 @@ MonoBehaviour:
   - Value:
       POT: 8
       Number: 256
-    Color: {r: 0.011764706, g: 0.011764706, b: 0.019607844, a: 1}
+    Color: {r: 0.83, g: 0.68309, b: 0.82899374, a: 1}
   - Value:
       POT: 9
       Number: 512
