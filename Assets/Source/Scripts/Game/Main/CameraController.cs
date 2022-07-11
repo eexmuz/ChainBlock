@@ -1,3 +1,4 @@
+using System.Collections;
 using Core;
 using Core.Attributes;
 using Core.Settings;
@@ -10,6 +11,9 @@ public class CameraController : DIBehaviour
 
     [SerializeField]
     private float _borderWidth;
+
+    [SerializeField]
+    private BackgroundScaler _background;
     
     [Inject]
     private GameSettings _gameSettings;
@@ -22,5 +26,13 @@ public class CameraController : DIBehaviour
         var position = _camera.transform.position;
         position.z = -boardWidth / tanFOV;
         _camera.transform.position = position;
+
+        StartCoroutine(UpdateBackground_co());
+    }
+
+    private IEnumerator UpdateBackground_co()
+    {
+        yield return new WaitForEndOfFrame();
+        _background.UpdateBackground(_camera);
     }
 }
