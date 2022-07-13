@@ -57,6 +57,7 @@
         PlayerReachedTargetNumber,
         RestartLevel,
         LoadSavedLevel,
+        BlurGame,
         RestartConfirmed,
     }
 }

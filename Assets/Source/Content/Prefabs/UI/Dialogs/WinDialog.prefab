@@ -203,10 +203,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5871334385226681392}
-  - {fileID: 4420534240795436082}
-  - {fileID: 8629093926299216547}
-  - {fileID: 4373779831946072041}
   - {fileID: 2365465493775898497}
+  - {fileID: 8629093926299216547}
+  - {fileID: 4420534240795436082}
+  - {fileID: 4373779831946072041}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -312,7 +312,13 @@ MonoBehaviour:
   outDuration: 0.1
   animAlpha: 0
   animScale: 0
-  _levelCounter: {fileID: 5228439943683915786}
+  _levelCounter: {fileID: 1065257695407317790}
+  _stars:
+  - {fileID: 2093568544098134041}
+  - {fileID: 7578198458143009851}
+  - {fileID: 7032809375791991661}
+  _moves: {fileID: 2963475718785581240}
+  _targetMoves: {fileID: 8256219266112522101}
 --- !u!1 &1506788007386169999
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,7 +650,7 @@ RectTransform:
   - {fileID: 3834401650045195014}
   - {fileID: 2447406525702466416}
   m_Father: {fileID: 1837251822712110692}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1135,7 +1141,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1837251822712110692}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1725,7 +1731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.034, y: 0.04074812}
   m_AnchorMax: {x: 0.966, y: 0.9727593}
-  m_AnchoredPosition: {x: 0.37905884, y: -1.4798584}
+  m_AnchoredPosition: {x: 41, y: -1.4798584}
   m_SizeDelta: {x: 1.6228249, y: 0.4772476}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3509953577435290436
@@ -1947,7 +1953,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 8636877481111216802, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1999,7 +2005,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7166601925984879108}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6169903711651111781}
+        m_TargetAssemblyTypeName: VictoryDialog, Assembly-CSharp
+        m_MethodName: OnNextButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7032809375791991661
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,7 +2370,7 @@ RectTransform:
   - {fileID: 2508839883573759030}
   - {fileID: 533426275352968957}
   m_Father: {fileID: 1837251822712110692}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

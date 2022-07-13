@@ -11,7 +11,16 @@ using UnityEngine;
 public class VictoryDialog : BaseViewController
 {
     [SerializeField]
-    private TMP_Text _levelCounter;
+    private TextMeshProUGUI _levelCounter;
+
+    [SerializeField]
+    private GameObject[] _stars;
+
+    [SerializeField]
+    private TextMeshProUGUI _moves;
+
+    [SerializeField]
+    private TextMeshProUGUI _targetMoves;
 
     [Inject]
     private IPlayerDataService _playerDataService;
@@ -27,10 +36,15 @@ public class VictoryDialog : BaseViewController
         
         _nextButtonClicked = false;
 
-        int moves = (int) data;
-        int level = _gameService.CurrentLevel.LevelIndex;
+        (int moves, int stars, int targetMoves) result = ((int, int, int)) data;
 
-        _levelCounter.text = (level + 1).ToString();
+        _levelCounter.text = $"Уровень {(_gameService.CurrentLevel.LevelIndex + 1)} пройден";
+        _moves.text = result.moves.ToString();
+        _targetMoves.text = $"ЦЕЛЬ: {result.targetMoves}";
+        for (int i = 0; i < _stars.Length; i++)
+        {
+            _stars[i].SetActive(i < result.stars);
+        }
     }
 
     public override void OnShroudClicked() { }
@@ -48,6 +62,10 @@ public class VictoryDialog : BaseViewController
         if (_playerDataService.CanShowRateUs())
         {
             Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.RateUsDialog));
+        }
+        else
+        {
+            Dispatch(NotificationType.BlurGame, NotificationParams.Get(false));
         }
     }
 }

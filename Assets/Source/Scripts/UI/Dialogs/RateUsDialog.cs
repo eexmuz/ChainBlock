@@ -81,6 +81,7 @@ public class RateUsDialog : BaseViewController
     {
         IntegrationSubsystem.Instance.AnalyticsService.RateUs(_reason, 0);
 
+        Dispatch(NotificationType.BlurGame, NotificationParams.Get(false));
         CloseDialog();
     }
 

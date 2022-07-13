@@ -34,6 +34,9 @@ public class GameScreen : DIBehaviour
     [SerializeField]
     private CustomToggle _vibrationToggle;
 
+    [SerializeField]
+    private GameObject _blur;
+
     [Inject]
     private GameSettings _gameSettings;
 
@@ -52,6 +55,7 @@ public class GameScreen : DIBehaviour
         
         Subscribe(NotificationType.LevelLoaded, OnLevelLoaded);
         Subscribe(NotificationType.MovesCounterChanged, OnPlayerMove);
+        Subscribe(NotificationType.BlurGame, OnBlurGame);
         
         _soundToggle.SetToggleWithoutNotification(_gameOptionsService.Sound);
         _vibrationToggle.SetToggleWithoutNotification(_gameOptionsService.Vibration);
@@ -62,6 +66,11 @@ public class GameScreen : DIBehaviour
         {
             button.onClick.AddListener(() => _soundService.PlaySound(Sounds.Click));
         }
+    }
+
+    private void OnBlurGame(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        _blur.SetActive((bool) notificationParams.Data);
     }
 
     private void OnPlayerMove(NotificationType notificationType, NotificationParams notificationParams)

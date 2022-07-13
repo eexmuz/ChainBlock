@@ -70,10 +70,17 @@ public class LevelController : DIBehaviour
         int mergedPOT = (int) notificationParams.Data;
         if (mergedPOT >= _gameService.CurrentLevel.TargetValue.POT)
         {
+            int stars = _gameService.CurrentLevel.CalculateStars(_movesCounter);
             _playing = false;
             Dispatch(NotificationType.PlayerReachedTargetNumber);
-            _playerDataService.CompleteLevel(_gameService.CurrentLevel.LevelIndex, _gameService.CurrentLevel.CalculateStars(_movesCounter));
-            _delayedCallService.DelayedCall(_victoryDelay, () => Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None, _movesCounter)));
+            _playerDataService.CompleteLevel(_gameService.CurrentLevel.LevelIndex, stars);
+            _delayedCallService.DelayedCall(_victoryDelay, () =>
+            {
+                Dispatch(NotificationType.BlurGame, NotificationParams.Get(true));
+                Dispatch(NotificationType.ShowView,
+                        ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None,
+                            (_movesCounter, stars, _gameService.CurrentLevel.StarMoves.z - 1)));
+            });
         }
     }
 

@@ -2470,6 +2470,54 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &251816747962055830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8933456596716376942}
+  - component: {fileID: 117503968769169554}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8933456596716376942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251816747962055830}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1662.7687, y: 1662.7687, z: 1662.7687}
+  m_Children: []
+  m_Father: {fileID: 1578047588380883857}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &117503968769169554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251816747962055830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: b28b2658e570ed140b8aa2d340417f32, type: 2}
 --- !u!1 &1736018633375466352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,6 +2550,7 @@ RectTransform:
   - {fileID: 1920535797}
   - {fileID: 1930192843367421115}
   - {fileID: 982404798}
+  - {fileID: 8933456596716376942}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2544,6 +2593,7 @@ MonoBehaviour:
   _dropdown: {fileID: 6707509705060554884}
   _soundToggle: {fileID: 7152080384171491026}
   _vibrationToggle: {fileID: 5477485582815589782}
+  _blur: {fileID: 251816747962055830}
 --- !u!1 &1826109298383991233
 GameObject:
   m_ObjectHideFlags: 0
