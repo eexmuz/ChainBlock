@@ -253,6 +253,36 @@ MonoBehaviour:
     CustomPivot: {x: 0.5, y: 0.5}
     UseCustomBorder: 0
     CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: a682bb6232185f14b864782d96c8d01f
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: 13e5dab9fcf0af04590c279ed1798945
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
+  - Flag: 0
+    Identifier: 4909f92160ab5b240b118bfd2a7d5bae
+    Dirty: 0
+    Trim: 1
+    PadSize: 1
+    PadStyle: 0
+    UseCustomPivot: 0
+    CustomPivot: {x: 0.5, y: 0.5}
+    UseCustomBorder: 0
+    CustomBorder: {x: 0, y: 0, z: 0, w: 0}
   Sprites:
   - {fileID: -1242628687296170025, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
   - {fileID: -3190783083862809608, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
@@ -277,3 +307,6 @@ MonoBehaviour:
   - {fileID: 3314020849948320183, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
   - {fileID: -3577829298904880972, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
   - {fileID: 4977172005329777788, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
+  - {fileID: -761933863725385812, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
+  - {fileID: -1816755548282093316, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}
+  - {fileID: -3181606171480048652, guid: f1158901e4b842d4bb8f4178cf22d665, type: 3}

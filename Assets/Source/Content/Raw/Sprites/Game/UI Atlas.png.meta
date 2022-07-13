@@ -71,6 +71,15 @@ TextureImporter:
   - first:
       213: 4977172005329777788
     second: Exclude
+  - first:
+      213: -1816755548282093316
+    second: 4
+  - first:
+      213: -3181606171480048652
+    second: 8
+  - first:
+      213: -761933863725385812
+    second: 2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -361,13 +370,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Star 11
+      name: 4
       rect:
         serializedVersion: 2
-        x: 1881
-        y: 557
-        width: 166
-        height: 159
+        x: 1
+        y: 794
+        width: 191
+        height: 200
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -375,8 +384,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7d7700aeacb41cee0800000000000000
-      internalID: -1242628687296170025
+      spriteID: cf00de4547699c6e0800000000000000
+      internalID: -1816755548282093316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 8
+      rect:
+        serializedVersion: 2
+        x: 1122
+        y: 690
+        width: 191
+        height: 200
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fbbdbd3b0aa8d3d0800000000000000
+      internalID: -3181606171480048652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 794
+        width: 191
+        height: 200
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca7be4610311d65f0800000000000000
+      internalID: -761933863725385812
       vertices: []
       indices: 
       edges: []
@@ -385,8 +436,8 @@ TextureImporter:
       name: Star 18
       rect:
         serializedVersion: 2
-        x: 1
-        y: 794
+        x: 1881
+        y: 557
         width: 166
         height: 159
       alignment: 9
@@ -403,11 +454,32 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Star 11
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 794
+        width: 166
+        height: 159
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d7700aeacb41cee0800000000000000
+      internalID: -1242628687296170025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: retry
       rect:
         serializedVersion: 2
         x: 1122
-        y: 690
+        y: 892
         width: 125
         height: 125
       alignment: 9
@@ -427,8 +499,8 @@ TextureImporter:
       name: Ellipse 1
       rect:
         serializedVersion: 2
-        x: 169
-        y: 794
+        x: 1315
+        y: 699
         width: 120
         height: 121
       alignment: 9
@@ -445,31 +517,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Component 4
-      rect:
-        serializedVersion: 2
-        x: 1249
-        y: 699
-        width: 118
-        height: 120
-      alignment: 9
-      pivot: {x: 0.5, y: 0.49583334}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1491dbc89d8e544d0800000000000000
-      internalID: -3150856343209043647
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Ellipse 3
       rect:
         serializedVersion: 2
-        x: 291
+        x: 555
         y: 794
         width: 118
         height: 120
@@ -487,10 +538,31 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Component 4
+      rect:
+        serializedVersion: 2
+        x: 1249
+        y: 892
+        width: 118
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49583334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1491dbc89d8e544d0800000000000000
+      internalID: -3150856343209043647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: bottom
       rect:
         serializedVersion: 2
-        x: 1369
+        x: 1437
         y: 718
         width: 109
         height: 110
@@ -511,8 +583,8 @@ TextureImporter:
       name: Group 36
       rect:
         serializedVersion: 2
-        x: 169
-        y: 917
+        x: 555
+        y: 916
         width: 90
         height: 92
       alignment: 9
@@ -553,8 +625,8 @@ TextureImporter:
       name: settings
       rect:
         serializedVersion: 2
-        x: 671
-        y: 735
+        x: 1548
+        y: 699
         width: 61
         height: 64
       alignment: 9
@@ -574,8 +646,8 @@ TextureImporter:
       name: vibro
       rect:
         serializedVersion: 2
-        x: 1122
-        y: 817
+        x: 671
+        y: 735
         width: 58
         height: 44
       alignment: 9
@@ -595,8 +667,8 @@ TextureImporter:
       name: gray
       rect:
         serializedVersion: 2
-        x: 291
-        y: 916
+        x: 1315
+        y: 822
         width: 58
         height: 44
       alignment: 9
@@ -613,31 +685,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sound
-      rect:
-        serializedVersion: 2
-        x: 1480
-        y: 699
-        width: 50
-        height: 43
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fef0417f71f8c1a50800000000000000
-      internalID: 6493222095853719535
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: soundgray
       rect:
         serializedVersion: 2
-        x: 1
+        x: 387
         y: 955
         width: 50
         height: 43
@@ -650,6 +701,27 @@ TextureImporter:
       bones: []
       spriteID: ecae49d759e53e1f0800000000000000
       internalID: -1016865094705550642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sound
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 916
+        width: 50
+        height: 43
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fef0417f71f8c1a50800000000000000
+      internalID: 6493222095853719535
       vertices: []
       indices: 
       edges: []
