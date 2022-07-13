@@ -68,6 +68,9 @@ TextureImporter:
   - first:
       213: -102470257017897171
     second: progressbar_panel
+  - first:
+      213: 4977172005329777788
+    second: Exclude
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -199,7 +202,7 @@ TextureImporter:
         height: 57
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 11, y: 11, z: 11, w: 11}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -220,7 +223,7 @@ TextureImporter:
         height: 57
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 11, y: 11, z: 11, w: 11}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -316,11 +319,32 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: Exclude
+      rect:
+        serializedVersion: 2
+        x: 734
+        y: 690
+        width: 140
+        height: 320
+      alignment: 9
+      pivot: {x: 0.5, y: 0.60625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7433b39197721540800000000000000
+      internalID: 4977172005329777788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: Golden cube
       rect:
         serializedVersion: 2
-        x: 671
-        y: 735
+        x: 876
+        y: 699
         width: 244
         height: 244
       alignment: 9
@@ -382,7 +406,7 @@ TextureImporter:
       name: retry
       rect:
         serializedVersion: 2
-        x: 917
+        x: 1122
         y: 690
         width: 125
         height: 125
@@ -424,7 +448,7 @@ TextureImporter:
       name: Component 4
       rect:
         serializedVersion: 2
-        x: 1044
+        x: 1249
         y: 699
         width: 118
         height: 120
@@ -466,7 +490,7 @@ TextureImporter:
       name: bottom
       rect:
         serializedVersion: 2
-        x: 1164
+        x: 1369
         y: 718
         width: 109
         height: 110
@@ -508,8 +532,8 @@ TextureImporter:
       name: Union
       rect:
         serializedVersion: 2
-        x: 917
-        y: 817
+        x: 876
+        y: 945
         width: 67
         height: 68
       alignment: 9
@@ -529,8 +553,8 @@ TextureImporter:
       name: settings
       rect:
         serializedVersion: 2
-        x: 411
-        y: 794
+        x: 671
+        y: 735
         width: 61
         height: 64
       alignment: 9
@@ -550,8 +574,8 @@ TextureImporter:
       name: vibro
       rect:
         serializedVersion: 2
-        x: 291
-        y: 916
+        x: 1122
+        y: 817
         width: 58
         height: 44
       alignment: 9
@@ -571,8 +595,8 @@ TextureImporter:
       name: gray
       rect:
         serializedVersion: 2
-        x: 1275
-        y: 690
+        x: 291
+        y: 916
         width: 58
         height: 44
       alignment: 9
@@ -592,8 +616,8 @@ TextureImporter:
       name: sound
       rect:
         serializedVersion: 2
-        x: 734
-        y: 690
+        x: 1480
+        y: 699
         width: 50
         height: 43
       alignment: 9

@@ -57,5 +57,6 @@
         PlayerReachedTargetNumber,
         RestartLevel,
         LoadSavedLevel,
+        RestartConfirmed,
     }
 }

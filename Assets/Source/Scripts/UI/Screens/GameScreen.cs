@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using Aig.Client.Integration.Runtime.Analytics;
 using Aig.Client.Integration.Runtime.Subsystem;
 using Core;
 using Core.Attributes;
@@ -15,9 +17,6 @@ public class GameScreen : DIBehaviour
     private TMP_Text _targetBlockNumber;
 
     [SerializeField]
-    private Image _targetBlockImage;
-
-    [SerializeField]
     private TMP_Text _levelNumber;
 
     [SerializeField]
@@ -25,6 +24,15 @@ public class GameScreen : DIBehaviour
 
     [SerializeField]
     private GameObject[] _stars;
+
+    [SerializeField]
+    private SettingsDropdown _dropdown;
+    
+    [SerializeField]
+    private CustomToggle _soundToggle;
+
+    [SerializeField]
+    private CustomToggle _vibrationToggle;
 
     [Inject]
     private GameSettings _gameSettings;
@@ -35,12 +43,20 @@ public class GameScreen : DIBehaviour
     [Inject] 
     private ISoundService _soundService;
 
+    [Inject]
+    private IGameOptionsService _gameOptionsService;
+
     protected override void OnAppInitialized()
     {
         IntegrationSubsystem.Instance.AdsService.ShowBanner();
         
         Subscribe(NotificationType.LevelLoaded, OnLevelLoaded);
         Subscribe(NotificationType.MovesCounterChanged, OnPlayerMove);
+        
+        _soundToggle.SetToggleWithoutNotification(_gameOptionsService.Sound);
+        _vibrationToggle.SetToggleWithoutNotification(_gameOptionsService.Vibration);
+        _soundToggle.AddListener(() => _soundService.PlaySound(Sounds.Click));
+        _vibrationToggle.AddListener(() => _soundService.PlaySound(Sounds.Click));
 
         foreach (var button in GetComponentsInChildren<Button>())
         {
@@ -63,25 +79,39 @@ public class GameScreen : DIBehaviour
         LevelConfig loadedLevel = (LevelConfig) notificationParams.Data;
         _levelNumber.text = "LEVEL " + (loadedLevel.LevelIndex + 1);
         _targetBlockNumber.text = loadedLevel.TargetValue.Number.ToString();
-        _targetBlockImage.color = _gameSettings.BlockColors.GetColor(loadedLevel.TargetValue);
         foreach (var star in _stars)
         {
             star.SetActive(true);
         }
     }
 
-    public void OnPauseButtonClick()
+    public void OnRestartButtonClick()
     {
-        Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.PauseDialog));
+        Dispatch(NotificationType.RestartLevel);
     }
 
-    public void OnLevelsMenuButtonClick()
+    public void OnSettingsButtonClick()
     {
-        Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.LevelsMenu));
+        _dropdown.Toggle();
+    }
+    
+    public void OnSoundToggleChanged(bool value)
+    {
+        IntegrationSubsystem.Instance.AnalyticsService.CustomEvent("pause_button", new Dictionary<string, object>()
+        {
+            {"action_name", value ? "sound_on" : "sound_off"}
+        }, false, AnalyticType.AppMetrica);
+
+        _gameOptionsService.Sound = value;
     }
 
-    public void OnGenerateRandomLevel()
+    public void OnVibrationToggleChanged(bool value)
     {
-        Dispatch(NotificationType.GenerateRandomLevel);
+        IntegrationSubsystem.Instance.AnalyticsService.CustomEvent("pause_button", new Dictionary<string, object>()
+        {
+            {"action_name", value ? "vibration_on" : "vibration_off"}
+        }, false, AnalyticType.AppMetrica);
+
+        _gameOptionsService.Vibration = value;
     }
 }

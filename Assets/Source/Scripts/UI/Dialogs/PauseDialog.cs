@@ -55,9 +55,9 @@ public class PauseDialog : BaseViewController
     {
         base.InitWithData(data);
         
-        soundToggle.SetIsOnWithoutNotify(_gameOptionsService.Sound);
-        musicToggle.SetIsOnWithoutNotify(_gameOptionsService.Music);
-        vibrationToggle.SetIsOnWithoutNotify(_gameOptionsService.Vibration);
+        soundToggle.SetToggle(_gameOptionsService.Sound);
+        musicToggle.SetToggle(_gameOptionsService.Music);
+        vibrationToggle.SetToggle(_gameOptionsService.Vibration);
 
         _noAdsButton.SetActive(_playerDataService.NoAds == false);
 

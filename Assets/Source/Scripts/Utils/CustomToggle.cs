@@ -1,14 +1,39 @@
+using Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CustomToggle : Toggle
+[RequireComponent(typeof(Toggle))]
+public class CustomToggle : DIBehaviour
 {
-    private ToggleSprite _toggleSprite;
+    [SerializeField]
+    private GameObject _on;
     
-    public void SetIsOnWithoutNotify(bool value)
+    [SerializeField]
+    private GameObject _off;
+    
+    private Toggle _toggle;
+
+    protected override void OnAppInitialized()
     {
-        base.SetIsOnWithoutNotify(value);
-        _toggleSprite ??= GetComponent<ToggleSprite>();
-        _toggleSprite.OnValueChanged(value);
+        _toggle = GetComponent<Toggle>();
+        _toggle.onValueChanged.AddListener(SetToggle);
+    }
+
+    public void SetToggle(bool state)
+    {
+        _on.SetActive(state);
+        _off.SetActive(!state);
+    }
+
+    public void SetToggleWithoutNotification(bool state)
+    {
+        SetToggle(state);
+        _toggle ??= GetComponent<Toggle>();
+        _toggle.SetIsOnWithoutNotify(state);
+    }
+
+    public void AddListener(System.Action action)
+    {
+        _toggle.onValueChanged.AddListener(state => action.Invoke());
     }
 }
