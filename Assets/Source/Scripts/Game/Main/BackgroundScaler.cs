@@ -9,7 +9,10 @@ public class BackgroundScaler : DIBehaviour
     public void UpdateBackground(Camera camera)
     {
         float aspect = _texture.width / (float) _texture.height;
-        Vector3 cameraWorldSize = camera.ViewportToWorldPoint(new Vector3(1f, 1f, transform.position.z - camera.transform.position.z));
+        float distance = transform.position.z - camera.transform.position.z;
+        Vector3 cameraWorldSize = camera.ViewportToWorldPoint(new Vector3(1f, 1f, distance));
+        
+        Debug.Log($"CameraWorldSize = {cameraWorldSize}, with distance = {distance}");
 
         if (camera.aspect > aspect) // width controlling height
         {
