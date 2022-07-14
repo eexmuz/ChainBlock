@@ -20,6 +20,9 @@ public class Board : DIBehaviour
     [SerializeField]
     private GameObject _boardModel;
 
+    [SerializeField]
+    private Transform _blocksParent;
+
     [Inject]
     private GameSettings _gameSettings;
 
@@ -50,8 +53,9 @@ public class Board : DIBehaviour
         {
             Block block = _levelController.BlocksPool.Spawn();
             block.SetBlock(cell.BlockInfo);
+            block.transform.parent = _blocksParent;
             block.Coords = cell.Coords;
-            block.transform.position = GetCellPosition(cell.Coords);
+            block.transform.localPosition = GetCellPosition(cell.Coords);
 
             _blocks[cell.Coords.Index(_dimensions.x)] = block;
         }
@@ -90,7 +94,7 @@ public class Board : DIBehaviour
                     
                     if (block.Coords.Equals(coords) == false)
                     {
-                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
                     }
                 }
             }
@@ -112,7 +116,7 @@ public class Board : DIBehaviour
                     
                     if (block.Coords.Equals(coords) == false)
                     {
-                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
                     }
                 }
             }
@@ -134,7 +138,7 @@ public class Board : DIBehaviour
                     
                     if (block.Coords.Equals(coords) == false)
                     {
-                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
                     }
                 }
             }
@@ -156,7 +160,7 @@ public class Board : DIBehaviour
 
                     if (block.Coords.Equals(coords) == false)
                     {
-                        block.transform.DOMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
                     }
                 }
             }
@@ -272,8 +276,9 @@ public class Board : DIBehaviour
         
         Block mergedBlock = _levelController.BlocksPool.Spawn();
         mergedBlock.SetBlock(mergedPOT, true, true);
+        mergedBlock.transform.parent = _blocksParent;
         mergedBlock.Coords = targetBlock.Coords;
-        mergedBlock.transform.position = GetCellPosition(mergedBlock.Coords);
+        mergedBlock.transform.localPosition = GetCellPosition(mergedBlock.Coords);
         
         mergedBlock.JustMerged = true;
         _mergedBlocks.Enqueue(mergedBlock);
