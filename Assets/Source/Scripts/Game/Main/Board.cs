@@ -269,6 +269,8 @@ public class Board : DIBehaviour
             return false;
         }
 
+        bool mergeWithFrozen = block.Movable == false || targetBlock.Movable == false;
+
         _blocks[block.Coords.Index(_dimensions.x)] = null;
         _blocks[targetBlock.Coords.Index(_dimensions.x)] = null;
 
@@ -292,8 +294,13 @@ public class Board : DIBehaviour
 
         targetBlock.Coords = mergedBlock.Coords;
         _blocksToDestroy.Enqueue(targetBlock);
-        
 
+
+        if (mergeWithFrozen)
+        {
+            mergedBlock.PlayFrozenMergeVFX();
+        }
+        
         Dispatch(NotificationType.BlocksMerge, NotificationParams.Get(mergedPOT));
         
         return true;

@@ -19,6 +19,9 @@ public class Block : DIBehaviour
     [SerializeField]
     private GameObject _barrier;
 
+    [SerializeField]
+    private ParticleSystem _frozenMergeVFX;
+
     [Inject]
     private GameSettings _gameSettings;
 
@@ -28,7 +31,18 @@ public class Block : DIBehaviour
     
     public Coords Coords { get; set; }
     public bool JustMerged { get; set; }
+
+    private bool _playFrozenMergeVFX;
     
+    private void OnEnable()
+    {
+        if (_playFrozenMergeVFX)
+        {
+            _playFrozenMergeVFX = false;
+            _frozenMergeVFX.Play();
+        }
+    }
+
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {
         PowerOfTwo = powerOfTwo;
@@ -66,5 +80,10 @@ public class Block : DIBehaviour
                 PowerOfTwo = PowerOfTwo,
             }
         };
+    }
+
+    public void PlayFrozenMergeVFX()
+    {
+        _playFrozenMergeVFX = true;
     }
 }
