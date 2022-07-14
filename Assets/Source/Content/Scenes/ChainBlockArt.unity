@@ -638,6 +638,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ff970c16b4c2044a17909bd9280214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &638402790 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 350909504551501377, guid: 96882de474c0675488a4d24b81503469, type: 3}
+  m_PrefabInstance: {fileID: 1087547179}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &730495582
 GameObject:
   m_ObjectHideFlags: 0
@@ -2768,9 +2773,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ca17e82c84c6a242ae7bbfa0ac2b403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _victoryDelay: 0.5
+  _victoryDelay: 2
   _camera: {fileID: 1947808104}
   _board: {fileID: 1541778558}
+  _victoryVFX: {fileID: 638402790}
 --- !u!4 &1686263557
 Transform:
   m_ObjectHideFlags: 0

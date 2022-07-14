@@ -2583,6 +2583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471f9911ecf51a644b0e73444296b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 6844028408577318804}
   _targetBlockNumber: {fileID: 1415249901}
   _levelNumber: {fileID: 629829834}
   _moves: {fileID: 575395380}

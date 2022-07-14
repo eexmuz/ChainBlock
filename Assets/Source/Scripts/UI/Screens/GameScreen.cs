@@ -14,6 +14,9 @@ using UnityEngine.UI;
 public class GameScreen : DIBehaviour
 {
     [SerializeField]
+    private CanvasGroup _canvasGroup;
+    
+    [SerializeField]
     private TMP_Text _targetBlockNumber;
 
     [SerializeField]
@@ -56,6 +59,7 @@ public class GameScreen : DIBehaviour
         Subscribe(NotificationType.LevelLoaded, OnLevelLoaded);
         Subscribe(NotificationType.MovesCounterChanged, OnPlayerMove);
         Subscribe(NotificationType.BlurGame, OnBlurGame);
+        Subscribe(NotificationType.PlayerReachedTargetNumber, OnPlayerReachedTargetNumber);
         
         _soundToggle.SetToggleWithoutNotification(_gameOptionsService.Sound);
         _vibrationToggle.SetToggleWithoutNotification(_gameOptionsService.Vibration);
@@ -66,6 +70,11 @@ public class GameScreen : DIBehaviour
         {
             button.onClick.AddListener(() => _soundService.PlaySound(Sounds.Click));
         }
+    }
+
+    private void OnPlayerReachedTargetNumber(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        _canvasGroup.blocksRaycasts = false;
     }
 
     private void OnBlurGame(NotificationType notificationType, NotificationParams notificationParams)
@@ -92,6 +101,8 @@ public class GameScreen : DIBehaviour
         {
             star.SetActive(true);
         }
+        
+        _canvasGroup.blocksRaycasts = true;
     }
 
     public void OnRestartButtonClick()

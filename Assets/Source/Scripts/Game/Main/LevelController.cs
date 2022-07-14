@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using Core;
 using Core.Attributes;
@@ -24,6 +25,9 @@ public class LevelController : DIBehaviour
     
     [SerializeField]
     private Board _board;
+
+    [SerializeField]
+    private ParticleSystem _victoryVFX;
 
     [Inject]
     private GameSettings _gameSettings;
@@ -70,18 +74,29 @@ public class LevelController : DIBehaviour
         int mergedPOT = (int) notificationParams.Data;
         if (mergedPOT >= _gameService.CurrentLevel.TargetValue.POT)
         {
-            int stars = _gameService.CurrentLevel.CalculateStars(_movesCounter);
-            _playing = false;
-            Dispatch(NotificationType.PlayerReachedTargetNumber);
-            _playerDataService.CompleteLevel(_gameService.CurrentLevel.LevelIndex, stars);
-            _delayedCallService.DelayedCall(_victoryDelay, () =>
-            {
-                Dispatch(NotificationType.BlurGame, NotificationParams.Get(true));
-                Dispatch(NotificationType.ShowView,
-                        ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None,
-                            (_movesCounter, stars, _gameService.CurrentLevel.StarMoves.z - 1)));
-            });
+            StartCoroutine(OnTargetBlockMerged_co());
         }
+    }
+
+    private IEnumerator OnTargetBlockMerged_co()
+    {
+        yield return new WaitForEndOfFrame();
+        
+        int stars = _gameService.CurrentLevel.CalculateStars(_movesCounter);
+        _playing = false;
+        
+        _victoryVFX.Play();
+        
+        Dispatch(NotificationType.PlayerReachedTargetNumber);
+        _playerDataService.CompleteLevel(_gameService.CurrentLevel.LevelIndex, stars);
+
+        _delayedCallService.DelayedCall(_victoryDelay, () =>
+        {
+            Dispatch(NotificationType.BlurGame, NotificationParams.Get(true));
+            Dispatch(NotificationType.ShowView,
+                ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None,
+                    (_movesCounter, stars, _gameService.CurrentLevel.StarMoves.z - 1)));
+        });
     }
 
     private void OnLoadNewLevel(NotificationType notificationType, NotificationParams notificationParams)
@@ -106,6 +121,7 @@ public class LevelController : DIBehaviour
 
     private void LoadLevel(LevelConfig levelConfig, LevelData savedData = null)
     {
+        _victoryVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         _camera.SetupCamera(levelConfig);
         _board.SetupBoard(levelConfig, savedData);
 
@@ -139,12 +155,12 @@ public class LevelController : DIBehaviour
         }
 
         Debug.Log("Saving level data . . .");
-        _playerDataService.LevelData = GetLevelData();
+        _playerDataService.LevelData = _playing == false ? null : GetLevelData();
     }
 
     private void OnApplicationQuit()
     {
         Debug.Log("Saving level data . . .");
-        _playerDataService.LevelData = GetLevelData();
+        _playerDataService.LevelData = _playing == false ? null : GetLevelData();
     }
 }
