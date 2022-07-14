@@ -2,6 +2,7 @@ using System;
 using Core;
 using Core.Attributes;
 using Core.Settings;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -85,5 +86,10 @@ public class Block : DIBehaviour
     public void PlayFrozenMergeVFX()
     {
         _playFrozenMergeVFX = true;
+    }
+
+    public void Shake()
+    {
+        transform.DOPunchRotation(Vector3.forward * 3f, .7f);
     }
 }

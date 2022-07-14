@@ -12,9 +12,6 @@ using Utility;
 public class Board : DIBehaviour
 {
     [SerializeField]
-    private float _victoryDelay;
-    
-    [SerializeField]
     private LevelController _levelController;
 
     [SerializeField]
@@ -93,92 +90,82 @@ public class Board : DIBehaviour
 
         bool anyChanges = false;
         
-        if (direction == Direction.Down)
+        switch (direction)
         {
-            for (coords.y = 1; coords.y < _dimensions.y; coords.y++)
+            case Direction.Down:
             {
-                for (coords.x = 0; coords.x < _dimensions.x; coords.x++)
+                for (coords.y = 1; coords.y < _dimensions.y; coords.y++)
                 {
-                    Block block = _blocks[coords.Index(_dimensions.x)];
-                    if (block == null || block.Movable == false)
+                    for (coords.x = 0; coords.x < _dimensions.x; coords.x++)
                     {
-                        continue;
-                    }
-
-                    Block hit = SwipeBlock(block, direction, out anyChanges);
-                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
-                    
-                    if (block.Coords.Equals(coords) == false)
-                    {
-                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
+                        HandleBlock();
                     }
                 }
+
+                break;
+            }
+            case Direction.Up:
+            {
+                for (coords.y = _dimensions.y - 2; coords.y >= 0; coords.y--)
+                {
+                    for (coords.x = 0; coords.x < _dimensions.x; coords.x++)
+                    {
+                        HandleBlock();
+                    }
+                }
+
+                break;
+            }
+            case Direction.Right:
+            {
+                for (coords.x = _dimensions.x - 2; coords.x >= 0; coords.x--)
+                {
+                    for (coords.y = 0; coords.y < _dimensions.y; coords.y++)
+                    {
+                        HandleBlock();
+                    }
+                }
+
+                break;
+            }
+            case Direction.Left:
+            {
+                for (coords.x = 1; coords.x < _dimensions.y; coords.x++)
+                {
+                    for (coords.y = 0; coords.y < _dimensions.y; coords.y++)
+                    {
+                        HandleBlock();
+                    }
+                }
+
+                break;
             }
         }
-        if (direction == Direction.Up)
-        {
-            for (coords.y = _dimensions.y - 2; coords.y >= 0; coords.y--)
-            {
-                for (coords.x = 0; coords.x < _dimensions.x; coords.x++)
-                {
-                    Block block = _blocks[coords.Index(_dimensions.x)];
-                    if (block == null || block.Movable == false)
-                    {
-                        continue;
-                    }
 
-                    Block hit = SwipeBlock(block, direction, out anyChanges);
-                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
-                    
-                    if (block.Coords.Equals(coords) == false)
-                    {
-                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
-                    }
-                }
+        void HandleBlock()
+        {
+            Block block = _blocks[coords.Index(_dimensions.x)];
+            if (block == null)
+            {
+                return;
             }
-        }
-        if (direction == Direction.Right)
-        {
-            for (coords.x = _dimensions.x - 2; coords.x >= 0; coords.x--)
-            {
-                for (coords.y = 0; coords.y < _dimensions.y; coords.y++)
-                {
-                    Block block = _blocks[coords.Index(_dimensions.x)];
-                    if (block == null || block.Movable == false)
-                    {
-                        continue;
-                    }
 
-                    Block hit = SwipeBlock(block, direction, out anyChanges);
-                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
-                    
-                    if (block.Coords.Equals(coords) == false)
-                    {
-                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
-                    }
+            if (block.Movable == false)
+            {
+                if (block.Mergeable)
+                {
+                    block.Shake();
                 }
+                
+                return;
             }
-        }
-        if (direction == Direction.Left)
-        {
-            for (coords.x = 1; coords.x < _dimensions.y; coords.x++)
+
+            Block hit = SwipeBlock(block, direction, out anyChanges);
+            anyChanges = TryMergeBlocks(block, hit) || anyChanges;
+
+            if (block.Coords.Equals(coords) == false)
             {
-                for (coords.y = 0; coords.y < _dimensions.y; coords.y++)
-                {
-                    Block block = _blocks[coords.Index(_dimensions.x)];
-                    if (block == null || block.Movable == false)
-                    {
-                        continue;
-                    }
-
-                    Block hit = SwipeBlock(block, direction, out anyChanges);
-                    anyChanges = TryMergeBlocks(block, hit) || anyChanges;
-
-                    if (block.Coords.Equals(coords) == false)
-                    {
-                        block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
-                    }
-                }
+                block.transform.DOLocalMove(GetCellPosition(block.Coords), _gameSettings.SwipeAnimationDuration);
             }
         }
 

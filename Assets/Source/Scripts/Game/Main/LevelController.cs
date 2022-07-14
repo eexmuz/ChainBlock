@@ -43,6 +43,7 @@ public class LevelController : DIBehaviour
 
     private int _movesCounter;
     private bool _playing;
+    private bool _logoFaded;
 
     public ObjectPool<Block> BlocksPool { get; private set; }
 
@@ -57,12 +58,18 @@ public class LevelController : DIBehaviour
         Subscribe(NotificationType.LoadSavedLevel, OnLoadSavedLevel);
         Subscribe(NotificationType.BlocksMerge, OnBlocksMerge);
         Subscribe(NotificationType.BoardSetupComplete, OnBoardSetupComplete);
+        Subscribe(NotificationType.LoadingLogoFaded, OnLoadingLogoFaded);
         BlocksPool = new ObjectPool<Block>(_gameSettings.BlockPrefab, 36, transform);
     }
 
     private void OnBoardSetupComplete(NotificationType notificationType, NotificationParams notificationParams)
     {
         _playing = true;
+    }
+    
+    private void OnLoadingLogoFaded(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        _logoFaded = true;
     }
 
     private LevelData GetLevelData()
@@ -131,12 +138,23 @@ public class LevelController : DIBehaviour
 
         _victoryVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         _camera.SetupCamera(levelConfig);
-        _board.SetupBoard(levelConfig, savedData);
+
+        StartCoroutine(SetupBoard(levelConfig, savedData));
 
         _movesCounter = savedData?.MovesCount ?? 0;
 
         Dispatch(NotificationType.LevelLoaded, NotificationParams.Get(levelConfig));
         Dispatch(NotificationType.MovesCounterChanged, NotificationParams.Get(_movesCounter));
+    }
+
+    private IEnumerator SetupBoard(LevelConfig levelConfig, LevelData savedData)
+    {
+        while (_logoFaded == false)
+        {
+            yield return null;
+        }
+        
+        _board.SetupBoard(levelConfig, savedData);
     }
 
     private void OnSwipe(Direction direction)
