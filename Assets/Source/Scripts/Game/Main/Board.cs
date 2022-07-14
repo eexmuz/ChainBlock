@@ -45,23 +45,39 @@ public class Board : DIBehaviour
     public void SetupBoard(LevelConfig levelConfig, LevelData savedData = null)
     {
         ClearBoard();
+        CancelInvoke(nameof(OnSetupAnimationEnd));
         
         _dimensions = levelConfig.Dimensions;
         _blocks = new Block[_dimensions.x * _dimensions.y];
+
+        Block block = null;
+        float animationDelay = .2f;
         
         foreach (var cell in savedData == null ? levelConfig.CellsData : savedData.BlocksData)
         {
-            Block block = _levelController.BlocksPool.Spawn();
+            block = _levelController.BlocksPool.Spawn();
             block.SetBlock(cell.BlockInfo);
             block.transform.parent = _blocksParent;
             block.Coords = cell.Coords;
-            block.transform.localPosition = GetCellPosition(cell.Coords);
+            
+            Vector3 position = GetCellPosition(cell.Coords);
+            block.transform.localPosition = position - Vector3.forward * 15f;
 
+            block.transform.DOLocalMoveZ(0f, 1f).SetDelay(animationDelay);
+
+            animationDelay += .2f;
             _blocks[cell.Coords.Index(_dimensions.x)] = block;
         }
+        
+        Invoke(nameof(OnSetupAnimationEnd), animationDelay + 1f);
 
         _boardModel.transform.localScale = new Vector3(_dimensions.x * _gameSettings.CellSize.x,
             _dimensions.y * _gameSettings.CellSize.y, _boardModel.transform.localScale.z);
+    }
+
+    private void OnSetupAnimationEnd()
+    {
+        Dispatch(NotificationType.BoardSetupComplete);
     }
 
     public bool Swipe(Direction direction)

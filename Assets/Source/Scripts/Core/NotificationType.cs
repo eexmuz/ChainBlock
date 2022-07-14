@@ -59,5 +59,6 @@
         LoadSavedLevel,
         BlurGame,
         RestartConfirmed,
+        BoardSetupComplete,
     }
 }

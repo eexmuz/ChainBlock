@@ -46,7 +46,7 @@ public class GameController : DIBehaviour
         IntegrationSubsystem.Instance.AdsService.OnVideoAdsWatch += (s, s1, arg3, arg4) => UnlockUIAfterPlayingAd();
     }
 
-    private void Start()
+    private void OnLoadingLogoFaded(NotificationType notificationType, NotificationParams notificationParams)
     {
         LevelData savedData = _playerDataService.LevelData;
         if (savedData == null)
@@ -57,10 +57,7 @@ public class GameController : DIBehaviour
         {
             Dispatch(NotificationType.LoadSavedLevel, NotificationParams.Get(savedData));
         }
-    }
-
-    private void OnLoadingLogoFaded(NotificationType notificationType, NotificationParams notificationParams)
-    {
+        
         Dispatch(NotificationType.UiBlockingOperationEnd);
     }
     

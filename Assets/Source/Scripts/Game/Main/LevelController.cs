@@ -56,7 +56,13 @@ public class LevelController : DIBehaviour
         Subscribe(NotificationType.LoadNewLevel, OnLoadNewLevel);
         Subscribe(NotificationType.LoadSavedLevel, OnLoadSavedLevel);
         Subscribe(NotificationType.BlocksMerge, OnBlocksMerge);
+        Subscribe(NotificationType.BoardSetupComplete, OnBoardSetupComplete);
         BlocksPool = new ObjectPool<Block>(_gameSettings.BlockPrefab, 36, transform);
+    }
+
+    private void OnBoardSetupComplete(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        _playing = true;
     }
 
     private LevelData GetLevelData()
@@ -121,13 +127,14 @@ public class LevelController : DIBehaviour
 
     private void LoadLevel(LevelConfig levelConfig, LevelData savedData = null)
     {
+        _playing = false;
+
         _victoryVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         _camera.SetupCamera(levelConfig);
         _board.SetupBoard(levelConfig, savedData);
 
         _movesCounter = savedData?.MovesCount ?? 0;
 
-        _playing = true;
         Dispatch(NotificationType.LevelLoaded, NotificationParams.Get(levelConfig));
         Dispatch(NotificationType.MovesCounterChanged, NotificationParams.Get(_movesCounter));
     }
