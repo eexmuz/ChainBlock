@@ -23,6 +23,12 @@ public static class OpenSceneEditor
         OpenCommonScene("Hidden/UI");
     }
 
+    [MenuItem(MenuPrefix + "Constructor", false, 3)]
+    private static void OpenConstructor()
+    {
+        OpenCommonScene("LevelConstructor");
+    }
+
     private static void OpenCommonScene(string name)
     {
         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
