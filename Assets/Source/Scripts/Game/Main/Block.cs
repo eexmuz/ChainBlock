@@ -72,6 +72,6 @@ public class Block : DIBehaviour
     
     public void ShakeAnimation()
     {
-        transform.DOPunchRotation(Vector3.forward * 3f, .3f);
+        transform.DOPunchRotation(Vector3.forward * 1.5f, .3f);
     }
 }

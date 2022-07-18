@@ -36,7 +36,7 @@ public class ObjectPool
     }
 }
 
-public class ObjectPool<T> where T : MonoBehaviour
+public class ObjectPool<T> where T : Component
 {
     private Queue<T> _inactive;
     private List<T> _active;

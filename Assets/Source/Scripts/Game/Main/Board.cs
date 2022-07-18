@@ -24,6 +24,9 @@ public class Board : DIBehaviour
     [Inject]
     private GameSettings _gameSettings;
 
+    [Inject]
+    private IVFXService _vfxService;
+
     private Block[] _blocks;
     private int2 _dimensions;
     private Queue<Block> _mergedBlocks;
@@ -304,7 +307,7 @@ public class Board : DIBehaviour
 
         if (mergeWithFrozen)
         {
-            //TODO ice break VFX
+            _vfxService.Create(VFXId.IceBreak, targetBlock.transform.position, Quaternion.identity, null);
         }
         
         Dispatch(NotificationType.BlocksMerge, NotificationParams.Get(mergedPOT));

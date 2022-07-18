@@ -56,6 +56,8 @@ namespace Core
         public SoundSettings SoundSettings { get; private set; }
         
         public LocalNotificationSettings LocalNotificationSettings { get; private set; }
+        
+        public VFXSettings VFXSettings { get; private set; }
 
         #endregion
 
@@ -80,6 +82,7 @@ namespace Core
             var audioSettings = (GameAudioSettings) allSettings.FirstOrDefault(o => o.GetType() == typeof(GameAudioSettings));
             var localNotificationSettings = (LocalNotificationSettings) allSettings.FirstOrDefault(o => o.GetType() == typeof(LocalNotificationSettings));
             var soundSettings = (SoundSettings) allSettings.FirstOrDefault(o => o.GetType() == typeof(SoundSettings));
+            var vfxSettings = (VFXSettings) allSettings.FirstOrDefault(o => o.GetType() == typeof(VFXSettings));
 
             AppSettings = appSettings == null ? ScriptableObject.CreateInstance<ApplicationSettings>() : appSettings;
             GameSettings = gameSettingsAsset == null ? ScriptableObject.CreateInstance<GameSettings>() : gameSettingsAsset;
@@ -88,6 +91,7 @@ namespace Core
             GameAudioSettings = audioSettings == null ? ScriptableObject.CreateInstance<GameAudioSettings>() : audioSettings;
             LocalNotificationSettings = localNotificationSettings == null ? ScriptableObject.CreateInstance<LocalNotificationSettings>() : localNotificationSettings;
             SoundSettings = soundSettings == null ? ScriptableObject.CreateInstance<SoundSettings>() : soundSettings;
+            VFXSettings = vfxSettings == null ? ScriptableObject.CreateInstance<VFXSettings>() : vfxSettings;
 
             ActiveSettings = new List<ISettings>
             {
@@ -98,6 +102,7 @@ namespace Core
                 GameAudioSettings,
                 LocalNotificationSettings,
                 SoundSettings,
+                VFXSettings,
             };
         }
 
@@ -122,6 +127,7 @@ namespace Core
             GameAudioSettings = ScriptableObject.CreateInstance<GameAudioSettings>();
             LocalNotificationSettings = ScriptableObject.CreateInstance<LocalNotificationSettings>();
             SoundSettings = ScriptableObject.CreateInstance<SoundSettings>();
+            VFXSettings = ScriptableObject.CreateInstance<VFXSettings>();
 
             ActiveSettings = new List<ISettings>
             {
@@ -132,6 +138,7 @@ namespace Core
                 GameAudioSettings,
                 LocalNotificationSettings,
                 SoundSettings,
+                VFXSettings,
             };
         }
 

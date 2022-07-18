@@ -5127,8 +5127,6 @@ MonoBehaviour:
   _valueBlock: {fileID: 1297819642829326179}
   _lock: {fileID: 7422259858518548759}
   _barrier: {fileID: 6369351075991756651}
-  _frozenMergeVFX: {fileID: 155303990}
-  _animator: {fileID: 0}
 --- !u!1 &6369351075991756651
 GameObject:
   m_ObjectHideFlags: 0

@@ -2478,12 +2478,6 @@ MonoBehaviour:
   _levelController: {fileID: 1686263556}
   _boardModel: {fileID: 1645581569}
   _blocksParent: {fileID: 1428231988}
-  _duration1: 0.6
-  _ease1: 1
-  _duration2: 1
-  _ease2: 16
-  _vibrato: 3
-  _strength: 1.5
 --- !u!1 &1615631904
 GameObject:
   m_ObjectHideFlags: 0
