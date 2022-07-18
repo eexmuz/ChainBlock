@@ -20,9 +20,6 @@ public class Block : DIBehaviour
     [SerializeField]
     private GameObject _barrier;
 
-    [SerializeField]
-    private ParticleSystem _frozenMergeVFX;
-
     [Inject]
     private GameSettings _gameSettings;
 
@@ -33,16 +30,6 @@ public class Block : DIBehaviour
     public Coords Coords { get; set; }
     public bool JustMerged { get; set; }
 
-    private bool _playFrozenMergeVFX;
-    
-    private void OnEnable()
-    {
-        if (_playFrozenMergeVFX)
-        {
-            _playFrozenMergeVFX = false;
-            _frozenMergeVFX.Play();
-        }
-    }
 
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {
@@ -82,14 +69,9 @@ public class Block : DIBehaviour
             }
         };
     }
-
-    public void PlayFrozenMergeVFX()
+    
+    public void ShakeAnimation()
     {
-        _playFrozenMergeVFX = true;
-    }
-
-    public void Shake()
-    {
-        transform.DOPunchRotation(Vector3.forward * 3f, .7f);
+        transform.DOPunchRotation(Vector3.forward * 3f, .3f);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using Core.Attributes;
+using Core.Services;
 using Core.Settings;
 using DG.Tweening;
 using Unity.Mathematics;
@@ -47,12 +48,11 @@ public class Board : DIBehaviour
         _dimensions = levelConfig.Dimensions;
         _blocks = new Block[_dimensions.x * _dimensions.y];
 
-        Block block = null;
         float animationDelay = .2f;
         
         foreach (var cell in savedData == null ? levelConfig.CellsData : savedData.BlocksData)
         {
-            block = _levelController.BlocksPool.Spawn();
+            Block block = _levelController.BlocksPool.Spawn();
             block.SetBlock(cell.BlockInfo);
             block.transform.parent = _blocksParent;
             block.Coords = cell.Coords;
@@ -60,13 +60,16 @@ public class Board : DIBehaviour
             Vector3 position = GetCellPosition(cell.Coords);
             block.transform.localPosition = position - Vector3.forward * 15f;
 
-            block.transform.DOLocalMoveZ(0f, 1f).SetDelay(animationDelay);
-
+             var sequence = DOTween.Sequence();
+             sequence.Append(block.transform.DOLocalMoveZ(0f, .6f).SetEase(Ease.Linear));
+             sequence.Append(block.transform.DOPunchPosition(Vector3.forward * 1.5f, 1f, 3).SetEase(Ease.InOutQuint));
+             sequence.SetDelay(animationDelay);
+            
             animationDelay += .2f;
             _blocks[cell.Coords.Index(_dimensions.x)] = block;
         }
         
-        Invoke(nameof(OnSetupAnimationEnd), animationDelay + 1f);
+        Invoke(nameof(OnSetupAnimationEnd), animationDelay + 2f);
 
         _boardModel.transform.localScale = new Vector3(_dimensions.x * _gameSettings.CellSize.x,
             _dimensions.y * _gameSettings.CellSize.y, _boardModel.transform.localScale.z);
@@ -154,7 +157,7 @@ public class Board : DIBehaviour
             {
                 if (block.Mergeable)
                 {
-                    block.Shake();
+                    block.ShakeAnimation();
                 }
                 
                 return;
@@ -301,7 +304,7 @@ public class Board : DIBehaviour
 
         if (mergeWithFrozen)
         {
-            mergedBlock.PlayFrozenMergeVFX();
+            //TODO ice break VFX
         }
         
         Dispatch(NotificationType.BlocksMerge, NotificationParams.Get(mergedPOT));
