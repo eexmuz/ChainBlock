@@ -30,6 +30,16 @@ public class Block : DIBehaviour
     public Coords Coords { get; set; }
     public bool JustMerged { get; set; }
 
+    private bool _mergeAnimationQueued;
+
+    private void OnEnable()
+    {
+        if (_mergeAnimationQueued)
+        {
+            MergeAnimation();
+            _mergeAnimationQueued = false;
+        }
+    }
 
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {
@@ -73,5 +83,22 @@ public class Block : DIBehaviour
     public void ShakeAnimation()
     {
         transform.DOPunchRotation(Vector3.forward * 1.5f, .3f);
+    }
+
+    public void PlayMergeAnimation()
+    {
+        if (gameObject.activeSelf == false)
+        {
+            _mergeAnimationQueued = true;
+        }
+        else
+        {
+            MergeAnimation();
+        }
+    }
+
+    private void MergeAnimation()
+    {
+        transform.DOPunchScale(Vector3.one * .15f, .8f);
     }
 }

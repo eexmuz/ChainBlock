@@ -286,8 +286,9 @@ public class Board : DIBehaviour
         mergedBlock.transform.parent = _blocksParent;
         mergedBlock.Coords = targetBlock.Coords;
         mergedBlock.transform.localPosition = GetCellPosition(mergedBlock.Coords);
-        
+
         mergedBlock.JustMerged = true;
+        mergedBlock.PlayMergeAnimation();
         _mergedBlocks.Enqueue(mergedBlock);
         
         _blocks[mergedBlock.Coords.Index(_dimensions.x)] = mergedBlock;
