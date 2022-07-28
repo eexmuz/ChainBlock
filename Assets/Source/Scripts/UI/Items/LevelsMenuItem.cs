@@ -18,11 +18,12 @@ public class LevelsMenuItem : DIBehaviour
     
     public void Init(int levelNumber, LevelStatus levelStatus)
     {
-        _unlocked = levelStatus != null && levelStatus.Unlocked;
+        levelStatus.Unlocked = true;
+        _unlocked = true;
         
         _lockImage.SetActive(_unlocked == false);
 
-        if (levelStatus != null && _unlocked)
+        if (_unlocked)
         {
             for (int i = 0; i < _stars.Length; i++)
             {

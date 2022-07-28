@@ -128,4 +128,9 @@ public class GameScreen : DIBehaviour
 
         _gameOptionsService.Vibration = value;
     }
+
+    public void OnLevelsButtonClick()
+    {
+        Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.LevelsMenu));
+    }
 }
