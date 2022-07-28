@@ -34,13 +34,13 @@ public class Block : DIBehaviour
     public void SetBlock(int powerOfTwo, bool movable, bool mergeable)
     {
         PowerOfTwo = powerOfTwo;
-        Movable = movable;
+        Movable = movable && mergeable;
         Mergeable = mergeable;
-        
-        _barrier.SetActive(movable == false && mergeable == false);
+
+        _barrier.SetActive(mergeable == false);
         _valueBlock.SetActive(_barrier.activeSelf == false);
-        _lock.SetActive(movable == false && mergeable == true);
-        _number.gameObject.SetActive(mergeable == true);
+        _lock.SetActive(mergeable && movable == false);
+        _number.gameObject.SetActive(mergeable);
 
         if (_valueBlock.activeSelf)
         {
