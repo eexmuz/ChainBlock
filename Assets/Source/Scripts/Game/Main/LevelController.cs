@@ -105,7 +105,6 @@ public class LevelController : DIBehaviour
 
         _delayedCallService.DelayedCall(_victoryDelay, () =>
         {
-            Dispatch(NotificationType.BlurGame, NotificationParams.Get(true));
             Dispatch(NotificationType.ShowView,
                 ShowViewNotificationParams.Get(ViewName.VictoryDialog, ViewCreationOptions.None,
                     (_movesCounter, stars, _gameService.CurrentLevel.StarMoves.z - 1)));

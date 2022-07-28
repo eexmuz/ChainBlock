@@ -58,7 +58,6 @@ public class GameScreen : DIBehaviour
         
         Subscribe(NotificationType.LevelLoaded, OnLevelLoaded);
         Subscribe(NotificationType.MovesCounterChanged, OnPlayerMove);
-        Subscribe(NotificationType.BlurGame, OnBlurGame);
         Subscribe(NotificationType.PlayerReachedTargetNumber, OnPlayerReachedTargetNumber);
         
         _soundToggle.SetToggleWithoutNotification(_gameOptionsService.Sound);
@@ -75,11 +74,6 @@ public class GameScreen : DIBehaviour
     private void OnPlayerReachedTargetNumber(NotificationType notificationType, NotificationParams notificationParams)
     {
         _canvasGroup.blocksRaycasts = false;
-    }
-
-    private void OnBlurGame(NotificationType notificationType, NotificationParams notificationParams)
-    {
-        _blur.SetActive((bool) notificationParams.Data);
     }
 
     private void OnPlayerMove(NotificationType notificationType, NotificationParams notificationParams)

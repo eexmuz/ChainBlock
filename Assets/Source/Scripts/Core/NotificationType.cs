@@ -57,7 +57,6 @@
         PlayerReachedTargetNumber,
         RestartLevel,
         LoadSavedLevel,
-        BlurGame,
         RestartConfirmed,
         BoardSetupComplete,
     }

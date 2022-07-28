@@ -63,9 +63,5 @@ public class VictoryDialog : BaseViewController
         {
             Dispatch(NotificationType.ShowView, ShowViewNotificationParams.Get(ViewName.RateUsDialog));
         }
-        else
-        {
-            Dispatch(NotificationType.BlurGame, NotificationParams.Get(false));
-        }
     }
 }
