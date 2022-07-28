@@ -59,5 +59,6 @@
         LoadSavedLevel,
         RestartConfirmed,
         BoardSetupComplete,
+        BoardReadyToSwipe,
     }
 }

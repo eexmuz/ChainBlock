@@ -6,6 +6,7 @@ using Core.Notifications;
 using Core.Services;
 using Core.Settings;
 using UnityEngine;
+using Utility;
 
 public enum Direction
 {
@@ -44,6 +45,7 @@ public class LevelController : DIBehaviour
     private int _movesCounter;
     private bool _playing;
     private bool _logoFaded;
+    private Pair<bool, Direction> _queuedSwipeDirection;
 
     public ObjectPool<Block> BlocksPool { get; private set; }
 
@@ -59,7 +61,9 @@ public class LevelController : DIBehaviour
         Subscribe(NotificationType.BlocksMerge, OnBlocksMerge);
         Subscribe(NotificationType.BoardSetupComplete, OnBoardSetupComplete);
         Subscribe(NotificationType.LoadingLogoFaded, OnLoadingLogoFaded);
+        Subscribe(NotificationType.BoardReadyToSwipe, OnBoardReadyToSwipeHandler);
         BlocksPool = new ObjectPool<Block>(_gameSettings.BlockPrefab, 36, transform);
+        _queuedSwipeDirection = new Pair<bool, Direction>(false, Direction.Down);
     }
 
     private void OnBoardSetupComplete(NotificationType notificationType, NotificationParams notificationParams)
@@ -130,6 +134,15 @@ public class LevelController : DIBehaviour
         
         LoadLevel(level, savedData);
     }
+    
+    private void OnBoardReadyToSwipeHandler(NotificationType notificationType, NotificationParams notificationParams)
+    {
+        if (_queuedSwipeDirection.First)
+        {
+            _queuedSwipeDirection.First = false;
+            OnSwipe(_queuedSwipeDirection.Second);
+        }
+    }
 
     private void LoadLevel(LevelConfig levelConfig, LevelData savedData = null)
     {
@@ -160,6 +173,13 @@ public class LevelController : DIBehaviour
     {
         if (_playing == false)
         {
+            return;
+        }
+
+        if (_board.CanSwipe() == false)
+        {
+            _queuedSwipeDirection.First = true;
+            _queuedSwipeDirection.Second = direction;
             return;
         }
         

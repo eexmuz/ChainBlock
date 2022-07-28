@@ -32,7 +32,6 @@ public class Board : DIBehaviour
     private Queue<Block> _mergedBlocks;
     private Queue<Block> _blocksToDestroy;
     private Queue<Block> _blocksToSpawn;
-    private Pair<bool, Direction> _queuedSwipeDirection;
     private bool _animating;
 
     protected override void OnAppInitialized()
@@ -40,7 +39,6 @@ public class Board : DIBehaviour
         _mergedBlocks = new Queue<Block>();
         _blocksToDestroy = new Queue<Block>();
         _blocksToSpawn = new Queue<Block>();
-        _queuedSwipeDirection = new Pair<bool, Direction>(false, Direction.Down);
     }
 
     public void SetupBoard(LevelConfig levelConfig, LevelData savedData = null)
@@ -87,8 +85,6 @@ public class Board : DIBehaviour
     {
         if (_animating)
         {
-            _queuedSwipeDirection.First = true;
-            _queuedSwipeDirection.Second = direction;
             return false;
         }
         
@@ -166,8 +162,8 @@ public class Board : DIBehaviour
                 return;
             }
 
-            Block hit = SwipeBlock(block, direction, out anyChanges);
-            anyChanges = TryMergeBlocks(block, hit) || anyChanges;
+            Block hit = SwipeBlock(block, direction, out var blockMoved);
+            anyChanges = TryMergeBlocks(block, hit) || anyChanges || blockMoved;
 
             if (block.Coords.Equals(coords) == false)
             {
@@ -327,12 +323,8 @@ public class Board : DIBehaviour
         {
             _levelController.BlocksPool.Despawn(_blocksToDestroy.Dequeue());
         }
-
-        if (_queuedSwipeDirection.First)
-        {
-            _queuedSwipeDirection.First = false;
-            Swipe(_queuedSwipeDirection.Second);
-        }
+        
+        Dispatch(NotificationType.BoardReadyToSwipe);
     }
     
     private void ClearMergedBlocks()
@@ -373,5 +365,10 @@ public class Board : DIBehaviour
     public List<BoardCellData> GetBlocksData()
     {
         return _blocks.Where(block => block != null).Select(block => block.GetBlockData()).ToList();
+    }
+
+    public bool CanSwipe()
+    {
+        return _animating == false;
     }
 }
