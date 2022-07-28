@@ -51,7 +51,7 @@ public class GameController : DIBehaviour
         LevelData savedData = _playerDataService.LevelData;
         if (savedData == null)
         {
-            Dispatch(NotificationType.LoadNewLevel, NotificationParams.Get(_playerDataService.HighestOpenedLevel));
+            Dispatch(NotificationType.LoadNewLevel, NotificationParams.Get(_playerDataService.LastLevel));
         }
         else
         {
