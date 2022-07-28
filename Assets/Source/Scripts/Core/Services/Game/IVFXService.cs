@@ -5,6 +5,7 @@ namespace Core.Services
     public enum VFXId
     {
         IceBreak,
+        FrostNova,
     }
     
     public interface IVFXService : IService

@@ -305,6 +305,7 @@ public class Board : DIBehaviour
         if (mergeWithFrozen)
         {
             _vfxService.Create(VFXId.IceBreak, targetBlock.transform.position, Quaternion.identity, null);
+            _vfxService.Create(VFXId.FrostNova, targetBlock.transform.position, Quaternion.identity, null);
         }
         
         Dispatch(NotificationType.BlocksMerge, NotificationParams.Get(mergedPOT));

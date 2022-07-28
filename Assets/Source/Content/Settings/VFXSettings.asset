@@ -15,3 +15,5 @@ MonoBehaviour:
   _effects:
   - Key: 0
     Prefab: {fileID: 1699060755084918792, guid: c388d6b77c392da4b958c54deb5a5cc3, type: 3}
+  - Key: 1
+    Prefab: {fileID: 9026880334880066320, guid: 757df604761b8ef42831192c70ee1099, type: 3}
